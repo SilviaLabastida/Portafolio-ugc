@@ -1,0 +1,5 @@
+.git
+.wrangler
+wrangler.jsonc
+worker-videos.js
+_worker.js
