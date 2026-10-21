@@ -191,6 +191,124 @@ const CEL_FINAL = {
   ],
 };
 
+/* ---------- 2c) PORTAFOLIOS PARA CREADORAS ----------
+   Tu segundo producto: le armas su portafolio a otras creadoras.
+   Se abre con el botón "¿Te gustó mi portafolio? Cotiza el tuyo" (al final del tarifario)
+   o con el link directo: tu-pagina/#crea-el-tuyo
+
+   LUGARES DE LANZAMIENTO: cada vez que una creadora aparte, baja lugaresDisponibles
+   (8 → 7 → 6…). El 8 aparece tachado solo cuando ya se apartó al menos un lugar.
+   En 0 dice "agotado" y los precios de lanzamiento desaparecen solos.
+
+   PLANES: nombre, videos, precio (MXN antes de IVA), descuento de lanzamiento
+   (0.15 = 15%), rondas incluidas, cotizador ('no' | 'extra' | 'incluido'),
+   mood (cuál de los moods de abajo toma la página al elegirlo) e incluye
+   (lista; lo que empieza con ! se muestra con guion porque NO viene incluido).
+
+   Si cambias precios aquí, se actualizan solos en la página, el cotizador y los términos. */
+const PORTAFOLIOS = {
+  activo: true,
+  lanzamiento: {
+    lugaresTotales: 8,
+    lugaresDisponibles: 8,           // ← cámbialo cada vez que alguien aparte
+    fechaLimite: { es: '', en: '' }, // opcional, ej. { es: '30 de noviembre', en: 'November 30' }
+  },
+  maxVideos: 12,                     // tope de videos por página (límite de peso para GitHub)
+  maxRondas: 5,                      // tope de rondas de revisión, contando las incluidas
+  extras: {                          // durante el proyecto
+    video: 500,                      // video adicional, c/u
+    idioma: 400,                     // por idioma extra (ella manda los textos traducidos)
+    cotizador: 1000,                 // cotizador en Pro (en Firma ya viene incluido)
+    seccion: 800,                    // sección a la medida, c/u
+    sticker: 250,                    // foto recortada tipo sticker, c/u
+    dominio: 500,                    // conectar dominio propio
+    ronda: 300,                      // ronda de revisión extra
+  },
+  despues: {                         // cambios después de entregar (no hay mantenimiento)
+    cambiarVideo: 400,
+    agregarVideo: 700,
+    textos: 300,                     // por ronda
+  },
+  moodInicial: 'plano',              // el mood con el que se abre, antes de elegir plan
+  moods: {
+    plano: {
+      nombre: { es: 'Modo plano', en: 'Blueprint mode' },
+      patron: 'plano',               // cuadrícula de fondo
+      tema: {
+        fondo: '#FFFCF7', superficie: '#F2E9DF', texto: '#172B3A', textoSuave: '#3D4F5D',
+        acento: '#172B3A', destacado: '#642D3B', boton: '#172B3A', botonTexto: '#FFFCF7', logo: '#172B3A',
+        bloque: '#172B3A', bloqueTexto: '#FFFCF7', bloqueAcento: '#C9AC83',
+        titulares: 'archivo', cursiva: 'worksans',
+      },
+    },
+    creadora: {
+      nombre: { es: 'Modo creadora', en: 'Creator mode' },
+      patron: '',
+      tema: {
+        fondo: '#D8B3B8', superficie: '#F2E9DF', texto: '#3A1820', textoSuave: '#4F2A33',
+        acento: '#642D3B', destacado: '#642D3B', boton: '#642D3B', botonTexto: '#FFFCF7', logo: '#642D3B',
+        bloque: '#642D3B', bloqueTexto: '#FFFCF7', bloqueAcento: '#D8B3B8',
+        titulares: 'archivo', cursiva: 'pinyon',
+      },
+    },
+    estudio: {
+      nombre: { es: 'Modo estudio', en: 'Studio mode' },
+      patron: 'estudio',             // cuadrícula fina champagne
+      tema: {
+        fondo: '#0E1B26', superficie: '#172B3A', texto: '#FFFCF7', textoSuave: '#E2D6CC',
+        acento: '#C9AC83', destacado: '#C9AC83', boton: '#C9AC83', botonTexto: '#0E1B26', logo: '#C9AC83',
+        bloque: '#C9AC83', bloqueTexto: '#0E1B26', bloqueAcento: '#172B3A',
+        titulares: 'worksans', cursiva: 'pinyon',
+      },
+    },
+  },
+  planes: [
+    {
+      id: 'esencial',
+      nombre: { es: 'Esencial', en: 'Essential' },
+      videos: 4,
+      precio: 3500,
+      descuento: 0.15,
+      rondas: 1,
+      cotizador: 'no',
+      mood: 'plano',
+      incluye: {
+        es: ['Portada, sobre mí, videos y contacto', '!Sin cambio de mood', 'Hasta 3 colores y 2 tipografías, que tú defines', 'En español', '1 ronda de revisión', 'Entrega en 5 días hábiles'],
+        en: ['Hero, about me, videos and contact', '!No mood change', 'Up to 3 colors and 2 fonts, chosen by you', 'In Spanish', '1 round of revisions', 'Delivered in 5 business days'],
+      },
+    },
+    {
+      id: 'pro',
+      nombre: { es: 'Pro', en: 'Pro' },
+      videos: 6,
+      precio: 5000,
+      descuento: 0.15,
+      rondas: 1,
+      cotizador: 'extra',
+      mood: 'creadora',
+      incluye: {
+        es: ['Todo lo de Esencial + proceso y tarifario', 'Cambia de mood con cada video', 'Hasta 8 colores y 3 tipografías, que tú defines', 'En español', '1 ronda de revisión', 'Entrega en 7 días hábiles'],
+        en: ['Everything in Essential + process and rates', 'Mood changes with each video', 'Up to 8 colors and 3 fonts, chosen by you', 'In Spanish', '1 round of revisions', 'Delivered in 7 business days'],
+      },
+    },
+    {
+      id: 'firma',
+      nombre: { es: 'Firma', en: 'Signature' },
+      videos: 10,
+      hasta: true,                   // se muestra como "Hasta 10 videos"
+      precio: 7000,
+      descuento: 0.20,
+      rondas: 2,
+      cotizador: 'incluido',
+      mood: 'estudio',
+      incluye: {
+        es: ['Todo lo de Pro + cotizador', 'Celular “Aquí iría el tuyo” y 1 foto tipo sticker', 'Cambia de mood con cada video', 'Hasta 8 colores y 4 tipografías, que tú defines', 'En español', '2 rondas de revisión', 'Entrega en 10 días hábiles'],
+        en: ['Everything in Pro + quote tool', '“Your video goes here” phone and 1 sticker-style photo', 'Mood changes with each video', 'Up to 8 colors and 4 fonts, chosen by you', 'In Spanish', '2 rounds of revisions', 'Delivered in 10 business days'],
+      },
+    },
+  ],
+};
+
 /* ---------- 3) TEXTOS EN INGLÉS ----------
    El español vive en index.html. Aquí va su traducción, con la misma clave
    (data-i18n="clave"). {nombre} y {apellido} se reemplazan solos. */
@@ -301,6 +419,121 @@ const TEXTOS_EN = {
   ctWa: 'WhatsApp',
   ftRole: 'UGC content creator',
   ftNote: 'Videos labeled “Sample video” are concepts created to show my style.',
+
+  /* Modo creadoras */
+  crNavLabel: 'Portfolios for creators',
+  crPlansLabel: 'Plans',
+  crPrLabel: 'Process',
+  crExLabel: 'Extras',
+  crqLabel: 'Quote',
+  crNavTyc: 'Terms',
+  crCtaKicker: 'Are you a UGC creator?',
+  crT1: 'Like my portfolio?',
+  crT2: 'Get a quote for yours.',
+  crCtaText: 'I’ll build you one like it, with your videos, your colors and your style. No monthly fees, and it’s 100% yours.',
+  crCtaBtn: 'See plans for creators',
+  crKicker: 'Portfolios for UGC creators',
+  crLead: 'I’ll build you a page like this one, with your videos, your colors and your fonts. It’s published on your own GitHub account, with no monthly fees, and it’s 100% yours.',
+  crCta1: 'See plans',
+  crCta2: 'Get a quote',
+  crPlansT1: 'Choose your plan',
+  crPlansT2: 'and see its mood',
+  crPlansIntro: 'Tap a plan and this page switches to its mood. The cards are a preview: your page is built with your own material.',
+  crPlansAll: 'Every plan includes a design for phones and computers, a WhatsApp button and publishing on your GitHub account. Prices in MXN, plus VAT.',
+  crTycLink: 'Terms and conditions',
+  crPrT1: 'How we build it,',
+  crPrT2: 'step by step',
+  crSt1t: 'Book your spot',
+  crSt1p: 'You pick your plan in the quote tool, message me on WhatsApp and pay a 50% deposit.',
+  crSt2t: 'Kickoff call',
+  crSt2p: 'In a 45-minute video call we define your palette, your fonts, the tone and the sections.',
+  crSt3t: 'Send me your material',
+  crSt3p: 'Videos, photos, copy and logo, all together. Delivery days start counting from here.',
+  crSt4t: 'Review',
+  crSt4p: 'I send you your page to review. Essential and Pro include 1 round; Signature includes 2.',
+  crSt5t: 'Delivery',
+  crSt5p: 'You pay the remaining 50%, I publish it on your GitHub account and it’s 100% yours.',
+  crNeedT: 'What I need from you',
+  crNeed1: 'Your original videos, up to 90 seconds each',
+  crNeed2: '3 to 5 photos of you',
+  crNeed3: 'Your copy: tagline, short bio, niches and rates (if included)',
+  crNeed4: 'Your palette with color codes (for example, #642D3B)',
+  crNeed5: 'Your font names (free or licensed for web use)',
+  crNeed6: 'Your logo, ready as PNG or SVG, if you have one',
+  crNeed7: 'Your WhatsApp and email',
+  crNeed8: 'Translated copy, if you want another language',
+  crLimT: 'Limits so your page fits on GitHub',
+  crLimP1: 'Each video: up to 90 seconds and 15 MB once compressed (I compress them).',
+  crLimP2: 'Up to 12 videos per page. The whole page weighs under 200 MB.',
+  crLimP3: 'GitHub accepts files up to 25 MB and pages up to 1 GB, so you have room to spare and your page loads fast on phones.',
+  crExT1: 'Make it yours',
+  crExT2: 'with extras',
+  crExDuring: 'During the project',
+  crExAfter: 'After delivery',
+  crExAfterP: 'I deliver your page published on your GitHub account, and that’s where my work ends: maintenance isn’t included. I only make changes to pages I built, and they’re charged separately.',
+  crqT1: 'Quote',
+  crqT2: 'your portfolio',
+  crqIntro: 'Build your package and send it to me on WhatsApp. It’s an estimate: I’ll confirm the final price at the kickoff call.',
+  crqL1: '1. Choose your plan',
+  crqL2: '2. Extras',
+  crqL3: '3. More options',
+  crqVideos: 'Extra videos',
+  crqVideosMinus: 'Remove one video',
+  crqVideosPlus: 'Add one video',
+  crqIdiomas: 'Extra languages',
+  crqIdiomasMinus: 'Remove one language',
+  crqIdiomasPlus: 'Add one language',
+  crqSecciones: 'Custom sections',
+  crqSeccionesMinus: 'Remove one section',
+  crqSeccionesPlus: 'Add one section',
+  crqStickers: 'Sticker-style photos',
+  crqStickersMinus: 'Remove one sticker-style photo',
+  crqStickersPlus: 'Add one sticker-style photo',
+  crqRondas: 'Extra revision rounds',
+  crqRondasMinus: 'Remove one round',
+  crqRondasPlus: 'Add one round',
+  crqCot: 'Quote tool on my page',
+  crqDom: 'Connect my own domain',
+  crqName: 'Your name or @handle (optional)',
+  crqNamePh: 'e.g. @yourname.ugc',
+  crqAccept: 'I have read and accept the terms and conditions.',
+  crqSeeTyc: 'See terms',
+  crqFine: 'The launch price applies only to the plan, not to extras. Payment: 50% deposit and 50% before publishing. Prices in MXN, plus VAT.',
+  crCtT1: 'Ready for',
+  crCtT2: 'your portfolio?',
+  crCtText: 'Message me on WhatsApp and we’ll book your spot.',
+  crBack: 'Back to my portfolio',
+  ftCr: 'Are you a creator? Get a quote for your portfolio',
+  tycClose: 'Close',
+  tycTitle: 'Terms and conditions',
+  tycDate: 'Last updated: October 2026',
+  tycH1: '1. What’s included',
+  tycP1: 'I build your page from scratch using the structure of my portfolio and customize it with your material, your colors and your fonts. It includes only what’s in your plan and the extras you pay for; anything else gets quoted before I do it.',
+  tycH2: '2. Your material',
+  tycP2: 'You send me everything: videos, photos, copy, logo (ready as PNG or SVG), your palette with color codes and the names of your fonts. I don’t film, write or translate your copy, and I don’t design logos. Essential: up to 3 colors and 2 fonts. Pro: up to 8 colors and 3 fonts. Signature: up to 8 colors and 4 fonts. Fonts must be free (for example, from Google Fonts) or have a web license in your name; otherwise I’ll use a similar one.',
+  tycH3: '3. Rights and permissions',
+  tycP3: 'You guarantee you have permission to use everything you send me, including videos made for brands, music, photos and fonts. If anyone files a claim over that material, it’s your responsibility. I can turn down illegal or offensive content.',
+  tycH4: '4. Payments',
+  tycP4: 'You book your spot with a 50% deposit, which is non-refundable after the kickoff call. The remaining 50% is paid before publishing: the page is published and handed over only once it’s paid in full. Prices in Mexican pesos, plus VAT. Quotes are valid for 15 days. The launch price applies only to the plan, not to extras, and only while spots last.',
+  tycH5: '5. Timing',
+  tycP5: 'Delivery days (5, 7 or 10 business days, depending on your plan) start counting once I have all your material, with your palette and fonts defined. If I don’t receive your material within 30 days, the project is paused and rescheduled based on my availability. After 60 days without a reply, the project is considered closed.',
+  tycH6: '6. Revisions',
+  tycP6: 'A round is a single list of changes sent together. Essential and Pro include 1 round; Signature includes 2. Each extra round costs <span data-pf="extras.ronda">$300</span>, up to 5 rounds in total. If you don’t reply to a review within 10 business days, that version is considered approved. Changing the palette or fonts after approving them is charged as a redesign.',
+  tycH7: '7. Technical limits',
+  tycP7: 'Each video is up to 90 seconds and up to 15 MB once compressed (I compress them). Up to 12 videos per page, and the whole page weighs under 200 MB. That keeps it within GitHub’s limits (files up to 25 MB and pages up to 1 GB) and fast on phones.',
+  tycH8: '8. Your GitHub account',
+  tycP8: 'You open your GitHub account with your own email and phone, and add me as a collaborator during the project; when I deliver, I leave. You look after your password and two-step verification. Your page is published for free on GitHub Pages: there are no monthly fees, but it can’t be used to take payments online.',
+  tycH9: '9. Delivery and later changes',
+  tycP9: 'I deliver your page published on your GitHub account, and that’s where my work ends: maintenance isn’t included. For 15 days after delivery I fix, free of charge, any functional errors that are mine; content changes aren’t included. After that, every change is charged: replacing a video, <span data-pf="despues.cambiarVideo">$400</span>; adding a video, <span data-pf="despues.agregarVideo">$700</span>; changing copy, prices or photos, <span data-pf="despues.textos">$300</span> per round.',
+  tycH10: '10. I only work on my own work',
+  tycP10: 'I don’t modify or fix pages made by someone else: I only make changes to pages I built. If you or someone else changes your page’s code and something stops working, I may quote the fix separately or decline it.',
+  tycH11: '11. Ownership and credit',
+  tycP11: 'Once paid in full, your page and your content are yours. The base structure and code are mine, and I may reuse them with other creators. I may show your page in my portfolio and add “Page made by {nombre} {apellido}” to the footer; with launch pricing, this is a condition.',
+  tycH12: '12. Liability',
+  tycP12: 'GitHub is an external, free service: I’m not responsible for its outages, rule changes or traffic limits. I don’t guarantee results such as brands, sales, followers or Google ranking. My maximum liability is the amount you paid me.',
+  tycH13: '13. Acceptance',
+  tycP13: 'By checking “I have read and accept” in the quote tool and by paying the deposit, you accept these terms. If there are differences between the Spanish version and another language, the Spanish version prevails.',
+  tycNote: 'Questions? Message me before booking your spot.',
 };
 
 /* ---------- 4) TEXTOS QUE ARMA EL CÓDIGO ---------- */
@@ -350,6 +583,82 @@ const UI = {
     celDot: 'Ver {n} de {total}: Aquí iría el tuyo',
     waCel: 'Hola, {nombre}. Vi tu portafolio y me gustaría un video para mi marca.',
     waCelCat: 'Hola, {nombre}. Vi tu portafolio y me gustaría un video de {cat} para mi marca.',
+    // Modo creadoras
+    crWaGeneral: 'Hola, {nombre}. Vi tu página y me interesa un portafolio como el tuyo.',
+    crVideos: '{n} videos',
+    crVideosUpTo: 'Hasta {n} videos',
+    crChoose: 'Elegir {plan}',
+    crChosen: 'Elegiste {plan}',
+    crLaunch: 'Precio de lanzamiento (−{pct}%)',
+    crTax: 'MXN + IVA',
+    crRegularSr: 'Precio normal:',
+    crTplName: 'Tu nombre',
+    crTplLine: 'Tu frase aquí',
+    crTplPhoto: 'Tu foto',
+    crTplAbout: 'Sobre ti',
+    lzLabel: 'Precio de lanzamiento',
+    lzAll: 'Solo {total} lugares a precio de lanzamiento',
+    lzSome: 'Quedan {left} de {total} lugares a precio de lanzamiento',
+    lzOne: 'Queda 1 de {total} lugares a precio de lanzamiento',
+    lzNone: 'Precio de lanzamiento agotado',
+    lzUntil: ', o hasta el {fecha}, lo que pase primero',
+    lzCta: 'Precio de lanzamiento: solo {total} lugares',
+    lzCtaSome: 'Precio de lanzamiento: quedan {left} de {total} lugares',
+    lzCtaOne: 'Precio de lanzamiento: queda 1 de {total} lugares',
+    crMood: 'Plan {plan}: la página cambió a {mood}.',
+    crModeOn: 'Estás viendo los planes de portafolio para creadoras.',
+    crModeOff: 'Volviste a mi portafolio.',
+    xVideo: 'Video adicional',
+    xVideoNote: 'Máximo {max} videos por página',
+    xEach: 'c/u',
+    xIdioma: 'Otro idioma',
+    xIdiomaNote: 'Tú mandas los textos traducidos',
+    xPerLang: 'por idioma',
+    xCot: 'Cotizador en el plan Pro',
+    xCotNote: 'En Firma ya viene incluido',
+    xSeccion: 'Sección a la medida',
+    xSeccionNote: 'Métricas, servicios, preguntas frecuentes o lo que necesites',
+    xSticker: 'Foto recortada tipo sticker',
+    xStickerNote: 'Firma incluye 1',
+    xDominio: 'Conectar tu dominio propio',
+    xDominioNote: '.com o .mx; el dominio lo pagas tú cada año',
+    xRonda: 'Ronda de revisión extra',
+    xRondaNote: 'Máximo {max} rondas en total',
+    xCambiarVideo: 'Cambiar un video por otro',
+    xAgregarVideo: 'Agregar un video nuevo',
+    xTextos: 'Cambiar textos, precios o fotos',
+    xPerRound: 'por ronda',
+    crqHintVideo: '+{p} c/u · hasta {max}',
+    crqHintIdioma: '+{p} por idioma',
+    crqHintEach: '+{p} c/u',
+    crqHintRonda: '+{p} c/u · hasta {max}',
+    crqCotPro: '(+{p})',
+    crqCotFirma: '(incluido en Firma)',
+    crqCotNo: '(disponible desde Pro)',
+    crqDomHint: '(+{p})',
+    crqNoPlan: 'Elige tu plan para ver el total.',
+    crqPlanLine: 'Plan {plan} · {videos}',
+    crqDiscount: 'Descuento de lanzamiento (−{pct}%)',
+    crqVideosLine: '{n} video adicional',
+    crqVideosLineP: '{n} videos adicionales',
+    crqIdiomaLine: '{n} idioma extra',
+    crqIdiomaLineP: '{n} idiomas extra',
+    crqSeccionLine: '{n} sección a la medida',
+    crqSeccionLineP: '{n} secciones a la medida',
+    crqStickerLine: '{n} foto tipo sticker',
+    crqStickerLineP: '{n} fotos tipo sticker',
+    crqRondaLine: '{n} ronda extra',
+    crqRondaLineP: '{n} rondas extra',
+    crqCotLine: 'Cotizador',
+    crqDomLine: 'Dominio propio',
+    crqWaHello: 'Hola, {nombre}. Vi tu página y quiero cotizar mi portafolio.',
+    crqWaName: 'Soy: {name}',
+    crqWaTotal: 'Total aproximado: {total} MXN + IVA',
+    crqWaLaunch: '(con precio de lanzamiento en el plan)',
+    crqWaAccept: 'Leí y acepto los términos y condiciones.',
+    crqWaNoPlan: 'Todavía no elijo plan.',
+    crqMailSubject: 'Cotización de portafolio',
+    crqErrAccept: 'Para enviar, marca que leíste y aceptas los términos y condiciones.',
   },
   en: {
     docTitle: 'UGC content creator in Querétaro, Mexico',
@@ -396,6 +705,82 @@ const UI = {
     celDot: 'Go to {n} of {total}: Your video goes here',
     waCel: 'Hi {nombre}! I saw your portfolio and I’d like a video for my brand.',
     waCelCat: 'Hi {nombre}! I saw your portfolio and I’d like a {cat} video for my brand.',
+    // Creator mode
+    crWaGeneral: 'Hi {nombre}! I saw your page and I’m interested in a portfolio like yours.',
+    crVideos: '{n} videos',
+    crVideosUpTo: 'Up to {n} videos',
+    crChoose: 'Choose {plan}',
+    crChosen: 'You chose {plan}',
+    crLaunch: 'Launch price (−{pct}%)',
+    crTax: 'MXN + VAT',
+    crRegularSr: 'Regular price:',
+    crTplName: 'Your name',
+    crTplLine: 'Your tagline here',
+    crTplPhoto: 'Your photo',
+    crTplAbout: 'About you',
+    lzLabel: 'Launch price',
+    lzAll: 'Only {total} spots at launch price',
+    lzSome: '{left} of {total} spots left at launch price',
+    lzOne: '1 of {total} spots left at launch price',
+    lzNone: 'Launch price sold out',
+    lzUntil: ', or until {fecha}, whichever comes first',
+    lzCta: 'Launch price: only {total} spots',
+    lzCtaSome: 'Launch price: {left} of {total} spots left',
+    lzCtaOne: 'Launch price: 1 of {total} spots left',
+    crMood: '{plan} plan: the page switched to {mood}.',
+    crModeOn: 'You’re viewing the portfolio plans for creators.',
+    crModeOff: 'You’re back on my portfolio.',
+    xVideo: 'Extra video',
+    xVideoNote: 'Up to {max} videos per page',
+    xEach: 'each',
+    xIdioma: 'Another language',
+    xIdiomaNote: 'You send the translated copy',
+    xPerLang: 'per language',
+    xCot: 'Quote tool on the Pro plan',
+    xCotNote: 'Already included in Signature',
+    xSeccion: 'Custom section',
+    xSeccionNote: 'Metrics, services, FAQ or whatever you need',
+    xSticker: 'Sticker-style cut-out photo',
+    xStickerNote: 'Signature includes 1',
+    xDominio: 'Connect your own domain',
+    xDominioNote: '.com or .mx; you pay for the domain each year',
+    xRonda: 'Extra revision round',
+    xRondaNote: 'Up to {max} rounds in total',
+    xCambiarVideo: 'Replace a video',
+    xAgregarVideo: 'Add a new video',
+    xTextos: 'Change copy, prices or photos',
+    xPerRound: 'per round',
+    crqHintVideo: '+{p} each · up to {max}',
+    crqHintIdioma: '+{p} per language',
+    crqHintEach: '+{p} each',
+    crqHintRonda: '+{p} each · up to {max}',
+    crqCotPro: '(+{p})',
+    crqCotFirma: '(included in Signature)',
+    crqCotNo: '(available from Pro)',
+    crqDomHint: '(+{p})',
+    crqNoPlan: 'Choose your plan to see the total.',
+    crqPlanLine: '{plan} plan · {videos}',
+    crqDiscount: 'Launch discount (−{pct}%)',
+    crqVideosLine: '{n} extra video',
+    crqVideosLineP: '{n} extra videos',
+    crqIdiomaLine: '{n} extra language',
+    crqIdiomaLineP: '{n} extra languages',
+    crqSeccionLine: '{n} custom section',
+    crqSeccionLineP: '{n} custom sections',
+    crqStickerLine: '{n} sticker-style photo',
+    crqStickerLineP: '{n} sticker-style photos',
+    crqRondaLine: '{n} extra round',
+    crqRondaLineP: '{n} extra rounds',
+    crqCotLine: 'Quote tool',
+    crqDomLine: 'Own domain',
+    crqWaHello: 'Hi {nombre}! I saw your page and I’d like a quote for my portfolio.',
+    crqWaName: 'I’m: {name}',
+    crqWaTotal: 'Approximate total: {total} MXN + VAT',
+    crqWaLaunch: '(with launch price on the plan)',
+    crqWaAccept: 'I have read and accept the terms and conditions.',
+    crqWaNoPlan: 'I haven’t chosen a plan yet.',
+    crqMailSubject: 'Portfolio quote',
+    crqErrAccept: 'To send it, check that you have read and accept the terms and conditions.',
   },
 };
 
@@ -478,10 +863,10 @@ const UI = {
       btn.setAttribute('aria-label', t('langBtn'));
       $$('.lang__opt', btn).forEach((o) => o.classList.toggle('is-active', o.dataset.lang === lang));
     }
-    $$('.js-wa').forEach((a) => { a.href = waLink(fmt(t('waGeneral'), { nombre: CONFIG.nombre })); });
-    $$('.js-mail').forEach((a) => { a.href = mailLink(t('mailGeneralSubject'), fmt(t('waGeneral'), { nombre: CONFIG.nombre })); });
+    updateModeLinks();
     updateVideoTexts();
     updateQuote();
+    renderCreadoras();
   }
 
   function initLanguage() {
@@ -921,6 +1306,456 @@ const UI = {
     $$('input[type="number"]', form).forEach((i) => i.setAttribute('max', String(CONFIG.maxMeses)));
   }
 
+  /* ---------- Portafolios para creadoras ---------- */
+  const PF = typeof PORTAFOLIOS !== 'undefined' && PORTAFOLIOS && PORTAFOLIOS.activo ? PORTAFOLIOS : null;
+  const crMain = $('#creadoras');
+  const brandMain = $('#marcas');
+  const crq = $('#crq');
+  const wipe = $('.mode-wipe');
+  const siteStatus = $('#site-status');
+  const CR_HASH = '#crea-el-tuyo';
+  const CRQ_FIELDS = ['videos', 'idiomas', 'secciones', 'stickers', 'rondas'];
+  let modo = 'marcas';
+  let crPlan = null;
+  let crqCotUser = false;
+  let returnTo = null;
+
+  const isCrHash = (h) => h === CR_HASH || /^#cr-[\w-]+$/.test(h || '');
+  const pick = (o) => (o == null ? '' : typeof o === 'string' ? o : (o[lang] != null ? o[lang] : (o.es != null ? o.es : '')));
+  const say = (msg) => { if (siteStatus) siteStatus.textContent = msg; };
+  const planById = (id) => (PF && PF.planes.find((p) => p.id === id)) || null;
+  const moodOf = (p) => PF.moods[p ? p.mood : PF.moodInicial] || PF.moods[PF.moodInicial];
+  const videosLabel = (p) => fmt(p.hasta ? t('crVideosUpTo') : t('crVideos'), { n: p.videos });
+  const countLabel = (n, one, many) => fmt(n === 1 ? t(one) : t(many), { n });
+  const signed = (n) => (n < 0 ? `−${money(-n)}` : money(n));
+  const instant = { behavior: 'instant' };
+
+  function launchState() {
+    const l = (PF && PF.lanzamiento) || {};
+    const total = Math.max(0, Math.round(Number(l.lugaresTotales) || 0));
+    const left = Math.max(0, Math.min(total, Math.round(Number(l.lugaresDisponibles) || 0)));
+    return { total, left, activo: total > 0 && left > 0, fecha: pick(l.fechaLimite) };
+  }
+
+  function planPrice(p, L = launchState()) {
+    const d = L.activo ? Math.max(0, Math.min(0.9, Number(p.descuento) || 0)) : 0;
+    return { regular: p.precio, final: Math.round(p.precio * (1 - d)), d };
+  }
+
+  // WhatsApp y correo generales: cambian según el modo
+  function updateModeLinks() {
+    const cr = modo === 'creadoras';
+    const msg = fmt(cr ? t('crWaGeneral') : t('waGeneral'), { nombre: CONFIG.nombre });
+    $$('.js-wa').forEach((a) => { a.href = waLink(msg); });
+    $$('.js-mail').forEach((a) => { a.href = mailLink(cr ? t('crqMailSubject') : t('mailGeneralSubject'), msg); });
+  }
+
+  function applyCrMood() {
+    const m = moodOf(planById(crPlan));
+    applyTheme(m.tema);
+    if (m.patron) root.dataset.patron = m.patron; else delete root.dataset.patron;
+  }
+
+  function renderLanzamiento() {
+    const L = launchState();
+    const until = L.fecha ? fmt(t('lzUntil'), { fecha: L.fecha }) : '';
+    let text = t('lzNone');
+    if (L.total && L.left === L.total) text = fmt(t('lzAll'), { total: L.total }) + until;
+    else if (L.left === 1) text = fmt(t('lzOne'), { total: L.total }) + until;
+    else if (L.left > 1) text = fmt(t('lzSome'), { left: L.left, total: L.total }) + until;
+
+    const box = $('#cr-lz');
+    if (box) {
+      if (!L.total) {
+        box.innerHTML = '';
+      } else {
+        const taken = L.total - L.left;
+        const dots = Array.from({ length: L.total }, (_, i) => `<span class="lz__dot${i < taken ? ' is-taken' : ''}"></span>`).join('');
+        const strike = taken > 0
+          ? `<span class="lz__total">${L.total}<svg class="lz__strike" viewBox="0 0 40 60" preserveAspectRatio="none" aria-hidden="true"><path d="M3 50 C 12 41, 24 25, 37 9"/></svg></span>`
+          : '';
+        box.classList.toggle('lz--off', !L.activo);
+        box.innerHTML = `<p class="lz__num" aria-hidden="true">${strike}<span class="lz__left">${L.left}</span></p>
+          <div class="lz__body"><p class="lz__label">${esc(t('lzLabel'))}</p><p class="lz__text">${esc(text)}</p><div class="lz__dots" aria-hidden="true">${dots}</div></div>`;
+      }
+    }
+    const cta = $('#cr-cta-lz');
+    if (cta) {
+      let c = '';
+      if (L.activo) {
+        if (L.left === L.total) c = fmt(t('lzCta'), { total: L.total });
+        else if (L.left === 1) c = fmt(t('lzCtaOne'), { total: L.total });
+        else c = fmt(t('lzCtaSome'), { left: L.left, total: L.total });
+      }
+      cta.textContent = c;
+      cta.hidden = !c;
+    }
+  }
+
+  function renderPlanes() {
+    const box = $('#cr-plans');
+    if (!box) return;
+    const L = launchState();
+    box.innerHTML = PF.planes.map((p) => {
+      const pr = planPrice(p, L);
+      const id = esc(p.id);
+      const name = pick(p.nombre);
+      const sel = p.id === crPlan;
+      const cols = p.videos <= 6 ? p.videos : 5;
+      const phones = Array.from({ length: p.videos }, (_, i) => `<b>${i + 1}</b>`).join('');
+      const feats = (pick(p.incluye) || [])
+        .map((f) => (f.charAt(0) === '!' ? `<li class="is-no">${esc(f.slice(1))}</li>` : `<li>${esc(f)}</li>`)).join('');
+      const regular = pr.d ? `<s class="plan__regular"><span class="visually-hidden">${esc(t('crRegularSr'))} </span>${money(pr.regular)}</s>` : '';
+      const launch = pr.d ? `<span class="plan__launch">${esc(fmt(t('crLaunch'), { pct: Math.round(pr.d * 100) }))}</span>` : '';
+      return `<article class="plan plan--${esc(p.mood)}${sel ? ' is-selected' : ''}" data-plan="${id}" aria-labelledby="plan-${id}">
+        <div class="plan__head"><h3 class="plan__name" id="plan-${id}">${esc(name)}</h3><span class="plan__videos">${esc(videosLabel(p))}</span></div>
+        <p class="plan__mood">${esc(pick(moodOf(p).nombre))}</p>
+        <div class="tpl" aria-hidden="true">
+          <p class="tpl__name">${esc(t('crTplName'))}</p>
+          <p class="tpl__line">${esc(t('crTplLine'))}</p>
+          <div class="tpl__row"><span class="tpl__photo">${esc(t('crTplPhoto'))}<i>4:5</i></span><span class="tpl__bars"><span>${esc(t('crTplAbout'))}</span><i></i><i></i><i></i></span></div>
+          <div class="tpl__phones" style="--cols:${cols}">${phones}</div>
+        </div>
+        <ul class="plan__feats">${feats}</ul>
+        <p class="plan__price">${regular}<span class="plan__now">${money(pr.final)}</span><span class="plan__tax">${esc(t('crTax'))}</span>${launch}</p>
+        <button type="button" class="plan__btn" data-plan="${id}" aria-pressed="${sel}">${esc(fmt(sel ? t('crChosen') : t('crChoose'), { plan: name }))}</button>
+      </article>`;
+    }).join('');
+  }
+
+  function renderExtras() {
+    const E = PF.extras;
+    const D = PF.despues;
+    const row = (label, note, price) => `<div><dt>${esc(label)}${note ? `<small>${esc(note)}</small>` : ''}</dt><dd>${esc(price)}</dd></div>`;
+    const plus = (n, suffix) => `+${money(n)}${suffix ? ` ${suffix}` : ''}`;
+    const durante = $('#cr-x-durante');
+    const despues = $('#cr-x-despues');
+    if (durante) {
+      durante.innerHTML = [
+        row(t('xVideo'), fmt(t('xVideoNote'), { max: PF.maxVideos }), plus(E.video, t('xEach'))),
+        row(t('xIdioma'), t('xIdiomaNote'), plus(E.idioma, t('xPerLang'))),
+        row(t('xCot'), t('xCotNote'), plus(E.cotizador)),
+        row(t('xSeccion'), t('xSeccionNote'), plus(E.seccion, t('xEach'))),
+        row(t('xSticker'), t('xStickerNote'), plus(E.sticker, t('xEach'))),
+        row(t('xDominio'), t('xDominioNote'), plus(E.dominio)),
+        row(t('xRonda'), fmt(t('xRondaNote'), { max: PF.maxRondas }), plus(E.ronda, t('xEach'))),
+      ].join('');
+    }
+    if (despues) {
+      despues.innerHTML = [
+        row(t('xCambiarVideo'), '', money(D.cambiarVideo)),
+        row(t('xAgregarVideo'), '', money(D.agregarVideo)),
+        row(t('xTextos'), '', `${money(D.textos)} ${t('xPerRound')}`),
+      ].join('');
+    }
+  }
+
+  // Precios dentro de los términos (data-pf="extras.ronda", etc.)
+  function fillPfPrices() {
+    $$('[data-pf]').forEach((el) => {
+      const v = el.dataset.pf.split('.').reduce((o, k) => (o == null ? o : o[k]), PF);
+      if (typeof v === 'number') el.textContent = money(v);
+    });
+  }
+
+  function renderCrqPlanes() {
+    const box = $('#crq-planes');
+    if (!box) return;
+    const L = launchState();
+    box.innerHTML = PF.planes.map((p) => {
+      const pr = planPrice(p, L);
+      return `<label class="choice"><input type="radio" name="crPlan" value="${esc(p.id)}"${p.id === crPlan ? ' checked' : ''}><span class="choice__box"><span class="choice__title">${esc(pick(p.nombre))}</span><span class="choice__meta">${esc(videosLabel(p))}</span><span class="choice__price">${pr.d ? `<s>${money(pr.regular)}</s>` : ''}${money(pr.final)}</span></span></label>`;
+    }).join('');
+  }
+
+  function crqLimits(p) {
+    const minVideos = Math.min(...PF.planes.map((x) => x.videos));
+    const minRondas = Math.min(...PF.planes.map((x) => x.rondas));
+    return {
+      videos: Math.max(0, PF.maxVideos - (p ? p.videos : minVideos)),
+      idiomas: 2,
+      secciones: 4,
+      stickers: 4,
+      rondas: Math.max(0, PF.maxRondas - (p ? p.rondas : minRondas)),
+    };
+  }
+
+  function crqRead() {
+    const p = planById(crPlan);
+    const lim = crqLimits(p);
+    const v = {};
+    CRQ_FIELDS.forEach((k) => {
+      const n = Math.round(Number($(`#crq-${k}`).value));
+      v[k] = Number.isFinite(n) ? Math.max(0, Math.min(lim[k], n)) : 0;
+    });
+    const E = PF.extras;
+    const cot = !!(p && p.cotizador === 'extra' && crqCotUser);
+    const dom = $('#crq-dominio').checked;
+    const items = [];
+    let launch = false;
+    if (p) {
+      const pr = planPrice(p);
+      items.push({ label: fmt(t('crqPlanLine'), { plan: pick(p.nombre), videos: videosLabel(p) }), amount: pr.regular });
+      if (pr.d) {
+        launch = true;
+        items.push({ label: fmt(t('crqDiscount'), { pct: Math.round(pr.d * 100) }), amount: pr.final - pr.regular, discount: true });
+      }
+    }
+    if (v.videos) items.push({ label: countLabel(v.videos, 'crqVideosLine', 'crqVideosLineP'), amount: v.videos * E.video });
+    if (v.idiomas) items.push({ label: countLabel(v.idiomas, 'crqIdiomaLine', 'crqIdiomaLineP'), amount: v.idiomas * E.idioma });
+    if (cot) items.push({ label: t('crqCotLine'), amount: E.cotizador });
+    if (v.secciones) items.push({ label: countLabel(v.secciones, 'crqSeccionLine', 'crqSeccionLineP'), amount: v.secciones * E.seccion });
+    if (v.stickers) items.push({ label: countLabel(v.stickers, 'crqStickerLine', 'crqStickerLineP'), amount: v.stickers * E.sticker });
+    if (dom) items.push({ label: t('crqDomLine'), amount: E.dominio });
+    if (v.rondas) items.push({ label: countLabel(v.rondas, 'crqRondaLine', 'crqRondaLineP'), amount: v.rondas * E.ronda });
+    const subtotal = items.reduce((s, it) => s + it.amount, 0);
+    return { p, v, lim, items, subtotal, launch, name: ($('#crq-nombre').value || '').trim() };
+  }
+
+  function crqUpdate() {
+    if (!crq || !PF) return;
+    const q = crqRead();
+    const E = PF.extras;
+
+    CRQ_FIELDS.forEach((k) => {
+      const el = $(`#crq-${k}`);
+      el.max = String(q.lim[k]);
+      if (el.value !== String(q.v[k])) el.value = String(q.v[k]);
+    });
+    $$('.stepper__btn', crq).forEach((b) => {
+      const k = b.dataset.target.replace('crq-', '');
+      const off = Number(b.dataset.step) < 0 ? q.v[k] <= 0 : q.v[k] >= q.lim[k];
+      b.setAttribute('aria-disabled', String(off));
+    });
+
+    const hint = (sel, text) => { const el = $(sel); if (el) el.textContent = text; };
+    hint('#crq-videos-hint', fmt(t('crqHintVideo'), { p: money(E.video), max: q.lim.videos }));
+    hint('#crq-idiomas-hint', fmt(t('crqHintIdioma'), { p: money(E.idioma) }));
+    hint('#crq-secciones-hint', fmt(t('crqHintEach'), { p: money(E.seccion) }));
+    hint('#crq-stickers-hint', fmt(t('crqHintEach'), { p: money(E.sticker) }));
+    hint('#crq-rondas-hint', fmt(t('crqHintRonda'), { p: money(E.ronda), max: q.lim.rondas }));
+
+    const cotEl = $('#crq-cotizador');
+    const cotMode = q.p ? q.p.cotizador : 'no';
+    cotEl.disabled = cotMode !== 'extra';
+    cotEl.checked = cotMode === 'incluido' || (cotMode === 'extra' && crqCotUser);
+    hint('#crq-cot-hint', cotMode === 'incluido' ? t('crqCotFirma') : cotMode === 'extra' ? fmt(t('crqCotPro'), { p: money(E.cotizador) }) : t('crqCotNo'));
+    hint('#crq-dom-hint', fmt(t('crqDomHint'), { p: money(E.dominio) }));
+
+    const list = $('#crq-breakdown');
+    list.innerHTML = '';
+    if (!q.p) {
+      $('#crq-total').textContent = '—';
+      $('#crq-iva').textContent = t('crqNoPlan');
+    } else {
+      $('#crq-total').textContent = money(q.subtotal);
+      $('#crq-iva').textContent = fmt(t('withIva'), { total: money(q.subtotal * (1 + CONFIG.iva)), pct: Math.round(CONFIG.iva * 100) });
+      q.items.forEach((it) => {
+        const li = document.createElement('li');
+        const a = document.createElement('span'); a.textContent = it.label;
+        const b = document.createElement('span'); b.textContent = signed(it.amount);
+        li.append(a, b);
+        list.appendChild(li);
+      });
+    }
+
+    const lines = [fmt(t('crqWaHello'), { nombre: CONFIG.nombre })];
+    if (q.name) lines.push(fmt(t('crqWaName'), { name: q.name }));
+    lines.push('');
+    if (q.p) q.items.filter((it) => !it.discount).forEach((it) => lines.push(`• ${it.label}`));
+    else lines.push(t('crqWaNoPlan'));
+    if (q.p) {
+      lines.push('');
+      lines.push(fmt(t('crqWaTotal'), { total: money(q.subtotal) }) + (q.launch ? ` ${t('crqWaLaunch')}` : ''));
+    }
+    lines.push('');
+    lines.push(t('crqWaAccept'));
+    const msg = lines.join('\n');
+    $('#crq-wa').href = waLink(msg);
+    $('#crq-mail').href = mailLink(t('crqMailSubject') + (q.p ? ` · ${pick(q.p.nombre)}` : ''), msg.replace(/\n/g, '\r\n'));
+
+    const ok = $('#crq-acepto').checked;
+    ['#crq-wa', '#crq-mail'].forEach((s) => $(s).setAttribute('aria-disabled', String(!ok)));
+    if (ok) $('#crq-err').hidden = true;
+  }
+
+  function syncPlanUI() {
+    $$('.plan', $('#cr-plans')).forEach((c) => {
+      const on = c.dataset.plan === crPlan;
+      const p = planById(c.dataset.plan);
+      const b = $('.plan__btn', c);
+      c.classList.toggle('is-selected', on);
+      b.setAttribute('aria-pressed', String(on));
+      b.textContent = fmt(on ? t('crChosen') : t('crChoose'), { plan: pick(p.nombre) });
+    });
+    if (crq) $$('input[name="crPlan"]', crq).forEach((r) => { r.checked = r.value === crPlan; });
+  }
+
+  function selectPlan(id) {
+    const p = planById(id);
+    if (!p) return;
+    const changed = crPlan !== id;
+    crPlan = id;
+    syncPlanUI();
+    if (modo === 'creadoras') applyCrMood();
+    crqUpdate();
+    if (changed) say(fmt(t('crMood'), { plan: pick(p.nombre), mood: pick(moodOf(p).nombre).toLowerCase() }));
+  }
+
+  function renderCreadoras() {
+    if (!PF) return;
+    renderLanzamiento();
+    renderPlanes();
+    renderExtras();
+    renderCrqPlanes();
+    fillPfPrices();
+    crqUpdate();
+  }
+
+  // Cambia entre el portafolio (marcas) y el modo creadoras
+  function setModo(next, opts = {}) {
+    if (!PF || !crMain || !brandMain || next === modo) return;
+    const swap = () => {
+      modo = next;
+      const toCr = next === 'creadoras';
+      if (toCr) {
+        if (current) { const v = current.video; current = null; v.pause(); }
+        if (celSelected) { celSelected = null; updateCelTexts(); }
+      }
+      brandMain.hidden = toCr;
+      crMain.hidden = !toCr;
+      $$('[data-nav]').forEach((el) => { el.hidden = el.dataset.nav !== next; });
+      const back = $('#back-pill');
+      if (back) back.hidden = !toCr;
+      root.dataset.modo = next;
+      if (toCr) applyCrMood();
+      else { delete root.dataset.patron; resetTheme(); }
+      updateModeLinks();
+      const skip = $('.skip-link');
+      if (skip) skip.setAttribute('href', toCr ? '#cr-planes' : '#portafolio');
+      if (opts.history === 'push') history.pushState({ crModo: true }, '', CR_HASH);
+      else if (opts.history === 'replace') history.replaceState(null, '', toCr ? CR_HASH : location.pathname + location.search);
+
+      if (toCr) {
+        let target = null;
+        if (opts.keepHash && location.hash && location.hash !== CR_HASH) {
+          try { target = $(location.hash); } catch (e) { target = null; }
+        }
+        if (target) target.scrollIntoView(instant);
+        else {
+          window.scrollTo({ top: 0, ...instant });
+          const h = $('#cr-title');
+          if (h) h.focus({ preventScroll: true });
+        }
+        say(t('crModeOn'));
+      } else {
+        const to = returnTo ? $(returnTo) : null;
+        if (to) to.scrollIntoView({ block: 'center', ...instant });
+        else window.scrollTo({ top: 0, ...instant });
+        returnTo = null;
+        say(t('crModeOff'));
+      }
+    };
+    if (opts.instant || reduceMotion.matches || !wipe) { swap(); return; }
+    wipe.classList.remove('is-out');
+    void wipe.offsetWidth;
+    wipe.classList.add('is-in');
+    window.setTimeout(() => {
+      swap();
+      wipe.classList.remove('is-in');
+      wipe.classList.add('is-out');
+      window.setTimeout(() => wipe.classList.remove('is-out'), 520);
+    }, 440);
+  }
+
+  function openTyc() {
+    const d = $('#terminos');
+    if (!d) return;
+    if (typeof d.showModal === 'function') { if (!d.open) d.showModal(); } else d.setAttribute('open', '');
+    const inner = $('.tyc__inner', d);
+    if (inner) inner.scrollTop = 0;
+    const c = $('.tyc__close', d);
+    if (c) c.focus();
+  }
+
+  function closeTyc() {
+    const d = $('#terminos');
+    if (!d) return;
+    if (typeof d.close === 'function' && d.open) d.close(); else d.removeAttribute('open');
+  }
+
+  function initCreadoras() {
+    if (!PF || !crMain || !brandMain) {
+      $$('.cr-cta, .footer__cr').forEach((el) => { el.hidden = true; });
+      return;
+    }
+    document.addEventListener('click', (e) => {
+      const m = e.target.closest('.js-modo');
+      if (m) {
+        e.preventDefault();
+        if (m.dataset.modo === 'creadoras') {
+          returnTo = m.closest('.cr-cta') ? '.cr-cta' : m.closest('.footer') ? '.footer' : null;
+          setModo('creadoras', { history: 'push' });
+        } else {
+          setModo('marcas', { history: 'replace' });
+        }
+        return;
+      }
+      const tyc = e.target.closest('.js-tyc');
+      if (tyc) { e.preventDefault(); openTyc(); }
+    });
+
+    const plansBox = $('#cr-plans');
+    if (plansBox) {
+      plansBox.addEventListener('click', (e) => {
+        const b = e.target.closest('.plan__btn');
+        if (b) selectPlan(b.dataset.plan);
+      });
+    }
+
+    if (crq) {
+      crq.addEventListener('submit', (e) => e.preventDefault());
+      crq.addEventListener('change', (e) => {
+        if (e.target.name === 'crPlan') { selectPlan(e.target.value); return; }
+        if (e.target.id === 'crq-cotizador') crqCotUser = e.target.checked;
+        crqUpdate();
+      });
+      crq.addEventListener('input', (e) => { if (e.target.type === 'text') crqUpdate(); });
+      $$('.stepper__btn', crq).forEach((b) => b.addEventListener('click', () => {
+        if (b.getAttribute('aria-disabled') === 'true') return;
+        const el = document.getElementById(b.dataset.target);
+        el.value = String((Number(el.value) || 0) + Number(b.dataset.step));
+        crqUpdate();
+      }));
+      ['#crq-wa', '#crq-mail'].forEach((s) => {
+        const a = $(s);
+        if (!a) return;
+        a.addEventListener('click', (e) => {
+          if ($('#crq-acepto').checked) return;
+          e.preventDefault();
+          const err = $('#crq-err');
+          err.textContent = t('crqErrAccept');
+          err.hidden = false;
+          $('#crq-acepto').focus();
+        });
+      });
+    }
+
+    const dlg = $('#terminos');
+    if (dlg) {
+      const close = $('.tyc__close', dlg);
+      if (close) close.addEventListener('click', closeTyc);
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) closeTyc(); });
+    }
+
+    // Botón "atrás" del navegador y links directos (…/#crea-el-tuyo)
+    window.addEventListener('popstate', () => {
+      const want = isCrHash(location.hash) ? 'creadoras' : 'marcas';
+      if (want !== modo) setModo(want, { keepHash: true });
+    });
+    if (isCrHash(location.hash)) setModo('creadoras', { instant: true, keepHash: true });
+  }
+
   /* ---------- Detalles: barra superior y apariciones suaves ---------- */
   function initChrome() {
     const bar = $('#topbar');
@@ -929,7 +1764,8 @@ const UI = {
     onScroll();
 
     if (reduceMotion.matches || !('IntersectionObserver' in window)) return;
-    const targets = $$('.section-head, .section .display, .about__photos, .about__text > p, .tags, .step, .terms, .rate-card, .extras, .quote, .contact__inner > *');
+    const targets = $$('.section-head, .section .display, .about__photos, .about__text > p, .tags, .step, .terms, .rate-card, .extras, .quote, .contact__inner > *')
+      .filter((el) => !el.closest('#creadoras'));
     targets.forEach((el) => el.classList.add('reveal'));
     const io = new IntersectionObserver((entries) => {
       entries.forEach((en) => {
@@ -944,6 +1780,7 @@ const UI = {
   captureSpanish();
   initPortfolio();
   initQuote();
+  initCreadoras();
   initLanguage();
   applyLanguage();
   initChrome();

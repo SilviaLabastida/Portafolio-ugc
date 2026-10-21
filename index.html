@@ -11,7 +11,8 @@
   <meta property="og:type" content="website">
   <meta property="og:title" content="Silvia Labastida · Creadora de contenido UGC">
   <meta property="og:description" content="Contenido real que conecta. Belleza, skincare, wellness y estilo de vida.">
-  <meta property="og:image" content="og-image.jpg">
+  <meta property="og:image" content="https://silvialabastida.github.io/Portafolio-ugc/og-image.jpg">
+  <meta property="og:url" content="https://silvialabastida.github.io/Portafolio-ugc/">
   <meta property="og:locale" content="es_MX">
 
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -60,12 +61,19 @@
     <a class="topbar__logo" href="#inicio" aria-label="Inicio" data-i18n-aria="navHome">
       <svg class="mark" aria-hidden="true"><use href="#sl-mark"></use></svg>
     </a>
-    <nav class="topbar__nav" aria-label="Principal" data-i18n-aria="navLabel">
+    <nav class="topbar__nav" aria-label="Principal" data-i18n-aria="navLabel" data-nav="marcas">
       <a href="#sobre-mi" data-i18n="navAbout">Acerca de mí</a>
       <a href="#portafolio" data-i18n="navWork">Portafolio</a>
       <a href="#proceso" data-i18n="navProcess">Proceso</a>
       <a href="#tarifas" data-i18n="navRates">Tarifas</a>
       <a href="#contacto" data-i18n="navContact">Contacto</a>
+    </nav>
+    <nav class="topbar__nav" aria-label="Portafolios para creadoras" data-i18n-aria="crNavLabel" data-nav="creadoras" hidden>
+      <a href="#cr-planes" data-i18n="crPlansLabel">Planes</a>
+      <a href="#cr-proceso" data-i18n="crPrLabel">Proceso</a>
+      <a href="#cr-extras" data-i18n="crExLabel">Extras</a>
+      <a href="#cr-cotizador" data-i18n="crqLabel">Cotizador</a>
+      <button type="button" class="js-tyc" data-i18n="crNavTyc">Términos</button>
     </nav>
     <div class="topbar__actions">
       <button class="lang" type="button" id="lang-toggle" aria-label="Cambiar idioma a inglés">
@@ -78,7 +86,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="marcas">
     <!-- ===================== 01 · HERO ===================== -->
     <section class="hero" id="inicio" aria-labelledby="hero-title">
       <div class="hero__meta wrap" aria-hidden="true">
@@ -370,6 +378,20 @@
           </div>
           <p class="quote__fine" data-i18n="qFine">Es un aproximado, no una cotización final. Pago: 50% de anticipo y 50% contra entrega.</p>
         </form>
+
+        <!-- Puerta al modo creadoras: "¿Te gustó mi portafolio? Cotiza el tuyo" -->
+        <aside class="cr-cta" aria-labelledby="cr-cta-title">
+          <p class="cr-cta__kicker" data-i18n="crCtaKicker">¿Eres creadora UGC?</p>
+          <h3 class="cr-cta__title" id="cr-cta-title">
+            <span class="a" data-i18n="crT1">¿Te gustó mi portafolio?</span>
+            <span class="b" data-i18n="crT2">Cotiza el tuyo.</span>
+          </h3>
+          <p class="cr-cta__text" data-i18n="crCtaText">Te armo uno igual, con tus videos, tus colores y tu estilo. Sin mensualidades y 100% tuyo.</p>
+          <div class="cr-cta__row">
+            <button type="button" class="btn cr-cta__btn js-modo" data-modo="creadoras" data-i18n="crCtaBtn">Ver planes para creadoras</button>
+            <p class="cr-cta__lz" id="cr-cta-lz"></p>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -394,11 +416,320 @@
     </section>
   </main>
 
+  <!-- =====================================================================
+       MODO CREADORAS · "¿Te gustó mi portafolio? Cotiza el tuyo"
+       Planes, precios, extras y lugares de lanzamiento: script.js → PORTAFOLIOS.
+       Link directo a este modo: tu-pagina/#crea-el-tuyo
+       ===================================================================== -->
+  <main id="creadoras" class="cr" hidden>
+    <!-- Portada -->
+    <section class="cr-hero" id="crea-el-tuyo" aria-labelledby="cr-title">
+      <div class="wrap">
+        <p class="kicker" data-i18n="crKicker">Portafolios para creadoras UGC</p>
+        <h1 class="display cr-hero__title" id="cr-title" tabindex="-1">
+          <span class="t-strong" data-i18n="crT1">¿Te gustó mi portafolio?</span>
+          <span class="t-script" data-i18n="crT2">Cotiza el tuyo.</span>
+        </h1>
+        <p class="cr-hero__lead" data-i18n="crLead">Te armo una página como esta, con tus videos, tus colores y tus tipografías. Se publica en tu cuenta de GitHub, sin mensualidades, y es 100% tuya.</p>
+        <div class="cr-hero__ctas">
+          <a class="btn btn--primary" href="#cr-planes" data-i18n="crCta1">Ver planes</a>
+          <a class="btn btn--ghost" href="#cr-cotizador" data-i18n="crCta2">Cotizar</a>
+        </div>
+        <!-- Contador de lugares de lanzamiento (se arma desde PORTAFOLIOS.lanzamiento) -->
+        <div class="lz" id="cr-lz"></div>
+      </div>
+    </section>
+
+    <!-- 01 · Planes -->
+    <section class="section cr-sec" id="cr-planes" aria-labelledby="cr-plans-title">
+      <div class="wrap">
+        <p class="section-head"><span class="section-head__num">01</span><span data-i18n="crPlansLabel">Planes</span></p>
+        <h2 class="display" id="cr-plans-title">
+          <span class="t-strong" data-i18n="crPlansT1">Elige tu plan</span>
+          <span class="t-script" data-i18n="crPlansT2">y mira su mood</span>
+        </h2>
+        <p class="cr-intro" data-i18n="crPlansIntro">Toca un plan y esta página cambia a su mood. Las tarjetas son una muestra: tu página se arma con tu propio material.</p>
+        <!-- Las tarjetas de planes se crean desde PORTAFOLIOS.planes en script.js -->
+        <div class="plans" id="cr-plans"></div>
+        <p class="cr-note" data-i18n="crPlansAll">Todos los planes incluyen diseño para celular y computadora, botón de WhatsApp y publicación en tu cuenta de GitHub. Precios en MXN, más IVA.</p>
+        <p class="cr-tyc-link"><button type="button" class="link-btn js-tyc" data-i18n="crTycLink">Términos y condiciones</button></p>
+      </div>
+    </section>
+
+    <!-- 02 · Proceso -->
+    <section class="section cr-sec" id="cr-proceso" aria-labelledby="cr-process-title">
+      <div class="wrap">
+        <p class="section-head"><span class="section-head__num">02</span><span data-i18n="crPrLabel">Proceso</span></p>
+        <h2 class="display" id="cr-process-title">
+          <span class="t-strong" data-i18n="crPrT1">Así la armamos,</span>
+          <span class="t-script" data-i18n="crPrT2">paso a paso</span>
+        </h2>
+        <ol class="steps steps--5">
+          <li class="step">
+            <span class="step__num" aria-hidden="true">01</span>
+            <h3 class="step__title" data-i18n="crSt1t">Aparta tu lugar</h3>
+            <p data-i18n="crSt1p">Eliges tu plan en el cotizador, me escribes por WhatsApp y pagas el 50% de anticipo.</p>
+          </li>
+          <li class="step">
+            <span class="step__num" aria-hidden="true">02</span>
+            <h3 class="step__title" data-i18n="crSt2t">Reunión de arranque</h3>
+            <p data-i18n="crSt2p">En una videollamada de 45 minutos definimos tu paleta, tus tipografías, el tono y las secciones.</p>
+          </li>
+          <li class="step">
+            <span class="step__num" aria-hidden="true">03</span>
+            <h3 class="step__title" data-i18n="crSt3t">Me mandas tu material</h3>
+            <p data-i18n="crSt3p">Videos, fotos, textos y logo, todo junto. Desde aquí cuentan los días de entrega.</p>
+          </li>
+          <li class="step">
+            <span class="step__num" aria-hidden="true">04</span>
+            <h3 class="step__title" data-i18n="crSt4t">Revisión</h3>
+            <p data-i18n="crSt4p">Te mando tu página para revisarla. Esencial y Pro incluyen 1 ronda; Firma, 2.</p>
+          </li>
+          <li class="step">
+            <span class="step__num" aria-hidden="true">05</span>
+            <h3 class="step__title" data-i18n="crSt5t">Entrega</h3>
+            <p data-i18n="crSt5p">Pagas el 50% restante, la publico en tu cuenta de GitHub y es 100% tuya.</p>
+          </li>
+        </ol>
+
+        <div class="cr-need">
+          <div>
+            <h3 class="cr-sub" data-i18n="crNeedT">Lo que necesito de ti</h3>
+            <ul class="cr-list">
+              <li data-i18n="crNeed1">Tus videos originales, de hasta 90 segundos cada uno</li>
+              <li data-i18n="crNeed2">De 3 a 5 fotos tuyas</li>
+              <li data-i18n="crNeed3">Tus textos: frase, bio corta, nichos y tarifas (si van)</li>
+              <li data-i18n="crNeed4">Tu paleta con códigos de color (por ejemplo, #642D3B)</li>
+              <li data-i18n="crNeed5">Los nombres de tus tipografías (gratuitas o con licencia para web)</li>
+              <li data-i18n="crNeed6">Tu logo listo en PNG o SVG, si tienes</li>
+              <li data-i18n="crNeed7">Tu WhatsApp y tu correo</li>
+              <li data-i18n="crNeed8">Los textos traducidos, si quieres otro idioma</li>
+            </ul>
+          </div>
+          <div class="cr-box">
+            <h3 class="cr-sub" data-i18n="crLimT">Límites para que tu página quepa en GitHub</h3>
+            <p data-i18n="crLimP1">Cada video: máximo 90 segundos y 15 MB ya comprimido (yo los comprimo).</p>
+            <p data-i18n="crLimP2">Máximo 12 videos por página. La página completa pesa menos de 200 MB.</p>
+            <p data-i18n="crLimP3">GitHub acepta archivos de hasta 25 MB y páginas de hasta 1 GB, así que quedas con margen y tu página carga rápido en celular.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 · Extras -->
+    <section class="section cr-sec" id="cr-extras" aria-labelledby="cr-extras-title">
+      <div class="wrap">
+        <p class="section-head"><span class="section-head__num">03</span><span data-i18n="crExLabel">Extras</span></p>
+        <h2 class="display" id="cr-extras-title">
+          <span class="t-strong" data-i18n="crExT1">Hazla tuya</span>
+          <span class="t-script" data-i18n="crExT2">con extras</span>
+        </h2>
+        <div class="cr-extras">
+          <div class="cr-box">
+            <h3 class="cr-sub" data-i18n="crExDuring">Durante el proyecto</h3>
+            <dl class="xl" id="cr-x-durante"></dl>
+          </div>
+          <div class="cr-box">
+            <h3 class="cr-sub" data-i18n="crExAfter">Después de entregar</h3>
+            <p class="cr-box__lead" data-i18n="crExAfterP">Entrego tu página publicada en tu cuenta de GitHub y ahí termina mi trabajo: no incluye mantenimiento. Solo hago cambios a páginas que yo hice, y se cobran aparte.</p>
+            <dl class="xl" id="cr-x-despues"></dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 04 · Cotizador de portafolios -->
+    <section class="section cr-sec" id="cr-cotizador" aria-labelledby="cr-quote-title">
+      <div class="wrap">
+        <p class="section-head"><span class="section-head__num">04</span><span data-i18n="crqLabel">Cotizador</span></p>
+        <form class="quote cr-quote" id="crq" novalidate aria-labelledby="cr-quote-title">
+          <div class="quote__head">
+            <h2 class="quote__title" id="cr-quote-title">
+              <span class="t-strong" data-i18n="crqT1">Cotiza</span>
+              <span class="t-script" data-i18n="crqT2">tu portafolio</span>
+            </h2>
+            <p data-i18n="crqIntro">Arma tu paquete y mándamelo por WhatsApp. Es un aproximado: el precio final te lo confirmo en la reunión de arranque.</p>
+          </div>
+
+          <fieldset class="quote__field">
+            <legend data-i18n="crqL1">1. Elige tu plan</legend>
+            <div class="choice-grid choice-grid--3" id="crq-planes"></div>
+          </fieldset>
+
+          <fieldset class="quote__field quote__field--split">
+            <legend data-i18n="crqL2">2. Extras</legend>
+            <div class="stepper">
+              <label for="crq-videos" class="stepper__label" data-i18n="crqVideos">Videos adicionales</label>
+              <div class="stepper__ctrl">
+                <button type="button" class="stepper__btn" data-step="-1" data-target="crq-videos" aria-label="Quitar un video" data-i18n-aria="crqVideosMinus">−</button>
+                <input type="number" id="crq-videos" min="0" max="8" value="0" inputmode="numeric">
+                <button type="button" class="stepper__btn" data-step="1" data-target="crq-videos" aria-label="Agregar un video" data-i18n-aria="crqVideosPlus">+</button>
+              </div>
+              <small class="stepper__hint" id="crq-videos-hint"></small>
+            </div>
+            <div class="stepper">
+              <label for="crq-idiomas" class="stepper__label" data-i18n="crqIdiomas">Idiomas extra</label>
+              <div class="stepper__ctrl">
+                <button type="button" class="stepper__btn" data-step="-1" data-target="crq-idiomas" aria-label="Quitar un idioma" data-i18n-aria="crqIdiomasMinus">−</button>
+                <input type="number" id="crq-idiomas" min="0" max="2" value="0" inputmode="numeric">
+                <button type="button" class="stepper__btn" data-step="1" data-target="crq-idiomas" aria-label="Agregar un idioma" data-i18n-aria="crqIdiomasPlus">+</button>
+              </div>
+              <small class="stepper__hint" id="crq-idiomas-hint"></small>
+            </div>
+            <div class="stepper">
+              <label for="crq-secciones" class="stepper__label" data-i18n="crqSecciones">Secciones a la medida</label>
+              <div class="stepper__ctrl">
+                <button type="button" class="stepper__btn" data-step="-1" data-target="crq-secciones" aria-label="Quitar una sección" data-i18n-aria="crqSeccionesMinus">−</button>
+                <input type="number" id="crq-secciones" min="0" max="4" value="0" inputmode="numeric">
+                <button type="button" class="stepper__btn" data-step="1" data-target="crq-secciones" aria-label="Agregar una sección" data-i18n-aria="crqSeccionesPlus">+</button>
+              </div>
+              <small class="stepper__hint" id="crq-secciones-hint"></small>
+            </div>
+            <div class="stepper">
+              <label for="crq-stickers" class="stepper__label" data-i18n="crqStickers">Fotos tipo sticker</label>
+              <div class="stepper__ctrl">
+                <button type="button" class="stepper__btn" data-step="-1" data-target="crq-stickers" aria-label="Quitar una foto tipo sticker" data-i18n-aria="crqStickersMinus">−</button>
+                <input type="number" id="crq-stickers" min="0" max="4" value="0" inputmode="numeric">
+                <button type="button" class="stepper__btn" data-step="1" data-target="crq-stickers" aria-label="Agregar una foto tipo sticker" data-i18n-aria="crqStickersPlus">+</button>
+              </div>
+              <small class="stepper__hint" id="crq-stickers-hint"></small>
+            </div>
+            <div class="stepper">
+              <label for="crq-rondas" class="stepper__label" data-i18n="crqRondas">Rondas de revisión extra</label>
+              <div class="stepper__ctrl">
+                <button type="button" class="stepper__btn" data-step="-1" data-target="crq-rondas" aria-label="Quitar una ronda" data-i18n-aria="crqRondasMinus">−</button>
+                <input type="number" id="crq-rondas" min="0" max="4" value="0" inputmode="numeric">
+                <button type="button" class="stepper__btn" data-step="1" data-target="crq-rondas" aria-label="Agregar una ronda" data-i18n-aria="crqRondasPlus">+</button>
+              </div>
+              <small class="stepper__hint" id="crq-rondas-hint"></small>
+            </div>
+          </fieldset>
+
+          <fieldset class="quote__field">
+            <legend data-i18n="crqL3">3. Más opciones</legend>
+            <div class="cr-switches">
+              <label class="switch">
+                <input type="checkbox" id="crq-cotizador">
+                <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+                <span class="switch__label"><span data-i18n="crqCot">Cotizador en mi página</span> <small id="crq-cot-hint"></small></span>
+              </label>
+              <label class="switch">
+                <input type="checkbox" id="crq-dominio">
+                <span class="switch__track" aria-hidden="true"><span class="switch__thumb"></span></span>
+                <span class="switch__label"><span data-i18n="crqDom">Conectar mi dominio propio</span> <small id="crq-dom-hint"></small></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="quote__field">
+            <label for="crq-nombre" class="stepper__label" data-i18n="crqName">Tu nombre o @usuario (opcional)</label>
+            <input type="text" id="crq-nombre" class="text-input" autocomplete="name" placeholder="Ej. @tunombre.ugc" data-i18n-placeholder="crqNamePh">
+          </div>
+
+          <div class="quote__total" aria-live="polite">
+            <p class="quote__total-label" data-i18n="qTotal">Total aproximado</p>
+            <p class="quote__total-amount"><output id="crq-total">—</output> <span data-i18n="mxnTax">MXN + IVA</span></p>
+            <p class="quote__total-iva" id="crq-iva"></p>
+            <ul class="quote__breakdown" id="crq-breakdown"></ul>
+          </div>
+
+          <div class="accept">
+            <input type="checkbox" id="crq-acepto">
+            <label for="crq-acepto" data-i18n="crqAccept">Leí y acepto los términos y condiciones.</label>
+            <button type="button" class="link-btn js-tyc" data-i18n="crqSeeTyc">Ver términos</button>
+          </div>
+          <p class="accept__err" id="crq-err" role="alert" hidden></p>
+
+          <div class="quote__actions">
+            <a class="btn btn--primary btn--wa" id="crq-wa" href="https://wa.me/524422066199" target="_blank" rel="noopener" aria-disabled="true">
+              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><use href="#wa-icon"></use></svg>
+              <span data-i18n="qSendWa">Enviar por WhatsApp</span>
+            </a>
+            <a class="btn btn--ghost" id="crq-mail" href="mailto:s.Labastida94@Hotmail.com" aria-disabled="true" data-i18n="qSendMail">Enviar por correo</a>
+          </div>
+          <p class="quote__fine" data-i18n="crqFine">El precio de lanzamiento aplica solo al plan, no a los extras. Pago: 50% de anticipo y 50% antes de publicar. Precios en MXN, más IVA.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- 05 · Contacto -->
+    <section class="contact cr-contact" aria-labelledby="cr-contact-title">
+      <div class="wrap contact__inner">
+        <p class="section-head section-head--light"><span class="section-head__num">05</span><span data-i18n="ctLabel">Contacto</span></p>
+        <svg class="contact__mark mark" aria-hidden="true"><use href="#sl-mark"></use></svg>
+        <h2 class="display display--center" id="cr-contact-title">
+          <span class="t-script" data-i18n="crCtT1">¿Lista para</span>
+          <span class="t-strong" data-i18n="crCtT2">tu portafolio?</span>
+        </h2>
+        <p class="contact__text" data-i18n="crCtText">Escríbeme por WhatsApp y apartamos tu lugar.</p>
+        <div class="contact__actions">
+          <a class="btn btn--light btn--lg js-wa" href="https://wa.me/524422066199" target="_blank" rel="noopener">
+            <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><use href="#wa-icon"></use></svg>
+            <span><span data-i18n="ctWa">WhatsApp</span> · <span data-config="whatsappVisible">442 206 6199</span></span>
+          </a>
+          <a class="contact__mail js-mail" href="mailto:s.Labastida94@Hotmail.com" data-config="correo">s.Labastida94@Hotmail.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Términos y condiciones de los portafolios (se abre con los links "Términos") -->
+  <dialog class="tyc" id="terminos" aria-labelledby="tyc-title">
+    <div class="tyc__inner">
+      <button type="button" class="tyc__close" aria-label="Cerrar" data-i18n-aria="tycClose">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <p class="kicker" data-i18n="crKicker">Portafolios para creadoras UGC</p>
+      <h2 class="tyc__title" id="tyc-title" data-i18n="tycTitle">Términos y condiciones</h2>
+      <p class="tyc__date" data-i18n="tycDate">Última actualización: octubre de 2026</p>
+
+      <h3 data-i18n="tycH1">1. Qué incluye</h3>
+      <p data-i18n="tycP1">Hago tu página desde cero, con la estructura de mi portafolio, y la personalizo con tu material, tus colores y tus tipografías. Incluye solo lo de tu plan y los extras que pagues; cualquier otra cosa la cotizo antes de hacerla.</p>
+      <h3 data-i18n="tycH2">2. Tu material</h3>
+      <p data-i18n="tycP2">Tú me entregas todo: videos, fotos, textos, logo (listo en PNG o SVG), tu paleta con códigos de color y los nombres de tus tipografías. Yo no grabo, no escribo ni traduzco tus textos y no diseño logos. Esencial: hasta 3 colores y 2 tipografías. Pro: hasta 8 colores y 3 tipografías. Firma: hasta 8 colores y 4 tipografías. Las tipografías deben ser gratuitas (por ejemplo, de Google Fonts) o tener una licencia para web a tu nombre; si no, uso una parecida.</p>
+      <h3 data-i18n="tycH3">3. Derechos y permisos</h3>
+      <p data-i18n="tycP3">Garantizas que tienes permiso para usar todo lo que me mandas, incluidos videos hechos para marcas, música, fotos y tipografías. Si alguien reclama por ese material, la responsabilidad es tuya. Puedo rechazar contenido ilegal u ofensivo.</p>
+      <h3 data-i18n="tycH4">4. Pagos</h3>
+      <p data-i18n="tycP4">Apartas tu lugar con el 50% de anticipo, que no se devuelve después de la reunión de arranque. El 50% restante se paga antes de publicar: la página se publica y se entrega solo cuando está liquidada. Precios en pesos mexicanos, más IVA. Las cotizaciones valen 15 días. El precio de lanzamiento aplica solo al plan, no a los extras, y solo mientras haya lugares.</p>
+      <h3 data-i18n="tycH5">5. Tiempos</h3>
+      <p data-i18n="tycP5">Los días de entrega (5, 7 o 10 días hábiles, según tu plan) cuentan desde que tengo todo tu material, con tu paleta y tus tipografías definidas. Si en 30 días no recibo tu material, el proyecto se pausa y se reagenda según mi disponibilidad. Si pasan 60 días sin respuesta, el proyecto se da por terminado.</p>
+      <h3 data-i18n="tycH6">6. Revisiones</h3>
+      <p data-i18n="tycP6">Una ronda es una sola lista de cambios que me mandas junta. Esencial y Pro incluyen 1 ronda; Firma, 2. Cada ronda extra cuesta <span data-pf="extras.ronda">$300</span>, con un máximo de 5 rondas en total. Si no respondes a una revisión en 10 días hábiles, esa versión se da por aprobada. Cambiar la paleta o las tipografías después de aprobarlas se cobra como rediseño.</p>
+      <h3 data-i18n="tycH7">7. Límites técnicos</h3>
+      <p data-i18n="tycP7">Cada video dura máximo 90 segundos y pesa máximo 15 MB ya comprimido (yo los comprimo). Máximo 12 videos por página, y la página completa pesa menos de 200 MB. Así cumple los límites de GitHub (archivos de hasta 25 MB y páginas de hasta 1 GB) y carga rápido en celular.</p>
+      <h3 data-i18n="tycH8">8. Tu cuenta de GitHub</h3>
+      <p data-i18n="tycP8">Abres tu cuenta de GitHub con tu correo y tu celular, y me agregas como colaboradora durante el proyecto; al entregar, me salgo. Tú cuidas tu contraseña y tu verificación en dos pasos. Tu página se publica gratis en GitHub Pages: no hay mensualidades, pero tampoco puede usarse para cobrar pagos en línea.</p>
+      <h3 data-i18n="tycH9">9. Entrega y cambios después</h3>
+      <p data-i18n="tycP9">Entrego tu página publicada en tu cuenta de GitHub y ahí termina mi trabajo: no incluye mantenimiento. Durante 15 días después de la entrega corrijo sin costo los errores de funcionamiento que sean míos; los cambios de contenido no entran. Después, cada cambio se cobra: cambiar un video, <span data-pf="despues.cambiarVideo">$400</span>; agregar un video, <span data-pf="despues.agregarVideo">$700</span>; cambiar textos, precios o fotos, <span data-pf="despues.textos">$300</span> por ronda.</p>
+      <h3 data-i18n="tycH10">10. Solo trabajo lo mío</h3>
+      <p data-i18n="tycP10">No modifico ni arreglo páginas hechas por otra persona: solo hago cambios a páginas que yo hice. Si tú u otra persona modifican el código de tu página y algo deja de funcionar, puedo cotizar el arreglo aparte o no hacerlo.</p>
+      <h3 data-i18n="tycH11">11. Propiedad y crédito</h3>
+      <p data-i18n="tycP11">Al liquidar, tu página y tu contenido son tuyos. La estructura base y el código son míos, y puedo reutilizarlos con otras creadoras. Puedo mostrar tu página en mi portafolio y poner «Página hecha por <span data-config="nombreCompleto">Silvia Labastida</span>» en el pie; con precio de lanzamiento, esto es condición.</p>
+      <h3 data-i18n="tycH12">12. Responsabilidad</h3>
+      <p data-i18n="tycP12">GitHub es un servicio externo y gratuito: no respondo por sus caídas, cambios en sus reglas ni límites de tráfico. No garantizo resultados como marcas, ventas, seguidores o posición en Google. Mi responsabilidad máxima es el monto que me pagaste.</p>
+      <h3 data-i18n="tycH13">13. Aceptación</h3>
+      <p data-i18n="tycP13">Al marcar «Leí y acepto» en el cotizador y al pagar el anticipo, aceptas estos términos. Si hay diferencias entre el español y otro idioma, vale la versión en español.</p>
+      <p class="tyc__note" data-i18n="tycNote">¿Dudas? Escríbeme antes de apartar tu lugar.</p>
+    </div>
+  </dialog>
+
+  <!-- Botón para volver del modo creadoras, cortinilla del cambio de modo y avisos para lectores de pantalla -->
+  <button type="button" class="back-pill js-modo" data-modo="marcas" id="back-pill" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    <span data-i18n="crBack">Volver a mi portafolio</span>
+  </button>
+  <div class="mode-wipe" aria-hidden="true"></div>
+  <p class="visually-hidden" id="site-status" aria-live="polite"></p>
+
   <footer class="footer">
     <div class="wrap footer__inner">
       <svg class="footer__mark mark" aria-hidden="true"><use href="#sl-mark"></use></svg>
       <p class="footer__name"><span data-config="nombreCompleto">Silvia Labastida</span> · <span data-i18n="ftRole">Creadora de contenido UGC</span> · <span data-config="ciudad">Querétaro, México</span></p>
       <p class="footer__note" data-i18n="ftNote">Los videos marcados como “Video de muestra” son conceptos creados para enseñar mi estilo.</p>
+      <p class="footer__cr">
+        <button type="button" class="link-btn js-modo" data-modo="creadoras" data-nav="marcas" data-i18n="ftCr">¿Eres creadora? Cotiza tu portafolio</button>
+        <button type="button" class="link-btn js-modo" data-modo="marcas" data-nav="creadoras" data-i18n="crBack" hidden>Volver a mi portafolio</button>
+      </p>
       <p class="footer__copy">© <span id="year">2026</span> <span data-config="nombreCompleto">Silvia Labastida</span></p>
     </div>
   </footer>
