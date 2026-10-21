@@ -195,7 +195,7 @@ const CEL_FINAL = {
    Tu segundo producto: le armas su portafolio a otras creadoras.
    Vive en su propia página, creadoras.html. Se abre con el botón "Ver planes para creadoras"
    (al final del tarifario), con el link del pie de página o con el link directo:
-   https://silvialabastida.github.io/Portafolio-ugc/creadoras.html
+   https://silvialabastida.s-labastida94.workers.dev/creadoras
    (los links viejos que terminan en #crea-el-tuyo también llevan ahí)
 
    LUGARES DE LANZAMIENTO: cada vez que una creadora aparte, baja lugaresDisponibles
@@ -334,7 +334,7 @@ const TEXTOS_EN = {
   marquee: 'Beauty ✦ Skincare ✦ Wellness ✦ Lifestyle ✦',
   aboutLabel: 'About me',
   altAbout1: 'Black and white portrait of Silvia',
-  altAbout2: 'Silvia in a black blazer, lace tights and heels',
+  altAbout2: 'Full-length photo of Silvia in a black blazer',
   aboutT1: 'Hi,',
   aboutT2: 'I’m {nombre}.',
   aboutP1: 'I create videos that feel like a recommendation from a friend: real, thoughtful and relatable.',

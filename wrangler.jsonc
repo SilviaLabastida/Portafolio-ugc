@@ -1,0 +1,16 @@
+// Configuración de Cloudflare para tu página. No la borres ni le cambies el nombre.
+// Publica todos los archivos de esta carpeta y, solo para los videos (.mp4),
+// usa primero worker-videos.js para que carguen bien en iPhone.
+{
+  "name": "silvialabastida",
+  "main": "worker-videos.js",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": ".",
+    "binding": "ASSETS",
+    "run_worker_first": ["/*.mp4"]
+  },
+  "observability": {
+    "enabled": true
+  }
+}
