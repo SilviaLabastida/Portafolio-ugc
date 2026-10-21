@@ -328,14 +328,12 @@ html.is-swapping .t-strong, html.is-swapping .t-script { opacity: 0; }
 .signature { font-family: var(--f-script); font-size: 3.6rem; color: var(--highlight); margin-top: 1.5rem !important; transform: rotate(-4deg); transform-origin: left; line-height: 1; }
 @media (min-width: 900px) { .about__grid { grid-template-columns: 1fr 1fr; align-items: center; } }
 
-/* Duotono: los filtros #duo-vino y #duo-marino están en index.html.
-   Funciona con fotos a color o en blanco y negro. */
+/* Duotono: las fotos de los separadores ya vienen teñidas (separador-1.jpg en azul marino
+   y separador-2.jpg en vino), así el celular no tiene que calcular el efecto en vivo. */
 .duo { position: relative; overflow: hidden; background: var(--duo-dark); }
 .duo img { width: 100%; height: 100%; object-fit: cover; }
 .duo--vino { --duo-dark: #3A1820; }
 .duo--marino { --duo-dark: #0E1B26; }
-.duo--vino img { filter: url(#duo-vino); }
-.duo--marino img { filter: url(#duo-marino); }
 
 /* ---------- 7. SEPARADORES ---------- */
 .divider { height: clamp(19rem, 70vw, 36rem); }
@@ -671,11 +669,19 @@ html.is-swapping .rate-card__title { opacity: 0; }
 }
 
 /* =====================================================================
-   13. MODO CREADORAS · "¿Te gustó mi portafolio? Cotiza el tuyo"
+   13. PÁGINA PARA CREADORAS (creadoras.html) · "¿Te gustó mi portafolio? Cotiza el tuyo"
    El mood de la página lo pone el plan elegido (script.js → PORTAFOLIOS.moods):
    plano (Esencial), creadora (Pro) y estudio (Firma).
    ===================================================================== */
 [hidden] { display: none !important; }
+
+/* Colores con los que abre la página (mood plano). Si cambias el mood plano en script.js,
+   cambia también estos para que no parpadee al cargar. */
+:root[data-page="creadoras"] {
+  --bg: #FFFCF7; --surface: #F2E9DF; --ink: #172B3A; --ink-soft: #3D4F5D;
+  --accent: #172B3A; --highlight: #642D3B; --btn: #172B3A; --btn-ink: #FFFCF7; --logo: #172B3A;
+  --block: #172B3A; --block-ink: #FFFCF7; --block-accent: #C9AC83;
+}
 
 /* Cuadrícula de fondo para los moods plano y estudio */
 :root[data-patron="plano"] { --grid-fine: rgba(23, 43, 58, .07); --grid-bold: rgba(23, 43, 58, .14); --grid-s: 12px; --grid-b: 60px; }
@@ -725,7 +731,7 @@ html.is-swapping .rate-card__title { opacity: 0; }
 .cr-cta__btn:focus-visible { outline-color: #172B3A; }
 .cr-cta__lz { font-size: .9rem; font-weight: 600; color: #642D3B; }
 
-/* Estructura del modo */
+/* Estructura de la página para creadoras */
 .cr { padding-bottom: 5rem; }
 .cr-hero { padding-block: clamp(2.5rem, 9vw, 5.5rem) clamp(1.5rem, 5vw, 3rem); }
 .cr-hero__title { margin-top: 1.25rem; font-size: clamp(2.6rem, 11.5vw, 6.75rem); outline: none; }
@@ -889,24 +895,13 @@ html.is-swapping .rate-card__title { opacity: 0; }
 .tyc p { line-height: 1.6; }
 .tyc__note { margin-top: 1.75rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--ink-soft); }
 
-/* Volver, pie de página y cortinilla del cambio de modo */
+/* Botón para volver al portafolio y pie de página */
 .back-pill {
   position: fixed; z-index: 70; left: max(16px, env(safe-area-inset-left, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   display: inline-flex; align-items: center; gap: .45rem; min-height: 46px; padding: 0 1.1rem 0 .85rem;
-  border: 0; border-radius: 999px; background: var(--btn); color: var(--btn-ink); cursor: pointer;
+  border: 0; border-radius: 999px; background: var(--btn); color: var(--btn-ink); cursor: pointer; text-decoration: none;
   font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
   box-shadow: 0 14px 30px -12px rgba(14, 27, 38, .55);
 }
 .back-pill svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .footer__cr { margin-top: .4rem; font-size: .88rem; }
-.mode-wipe {
-  position: fixed; inset: 0; z-index: 95; pointer-events: none; visibility: hidden; transform: translateY(100%);
-  background-color: #FFFCF7;
-  background-image:
-    linear-gradient(rgba(23, 43, 58, .14) 1px, transparent 1px), linear-gradient(90deg, rgba(23, 43, 58, .14) 1px, transparent 1px),
-    linear-gradient(rgba(23, 43, 58, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(23, 43, 58, .07) 1px, transparent 1px);
-  background-size: 60px 60px, 60px 60px, 12px 12px, 12px 12px;
-}
-.mode-wipe::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: #642D3B; }
-.mode-wipe.is-in { visibility: visible; transform: translateY(0); transition: transform .42s cubic-bezier(.65, 0, .35, 1); }
-.mode-wipe.is-out { visibility: visible; transform: translateY(-100%); transition: transform .5s cubic-bezier(.65, 0, .35, 1); }

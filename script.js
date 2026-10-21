@@ -193,8 +193,10 @@ const CEL_FINAL = {
 
 /* ---------- 2c) PORTAFOLIOS PARA CREADORAS ----------
    Tu segundo producto: le armas su portafolio a otras creadoras.
-   Se abre con el botón "¿Te gustó mi portafolio? Cotiza el tuyo" (al final del tarifario)
-   o con el link directo: tu-pagina/#crea-el-tuyo
+   Vive en su propia página, creadoras.html. Se abre con el botón "Ver planes para creadoras"
+   (al final del tarifario), con el link del pie de página o con el link directo:
+   https://silvialabastida.github.io/Portafolio-ugc/creadoras.html
+   (los links viejos que terminan en #crea-el-tuyo también llevan ahí)
 
    LUGARES DE LANZAMIENTO: cada vez que una creadora aparte, baja lugaresDisponibles
    (8 → 7 → 6…). El 8 aparece tachado solo cuando ya se apartó al menos un lugar.
@@ -221,7 +223,6 @@ const PORTAFOLIOS = {
     cotizador: 1000,                 // cotizador en Pro (en Firma ya viene incluido)
     seccion: 800,                    // sección a la medida, c/u
     sticker: 250,                    // foto recortada tipo sticker, c/u
-    dominio: 500,                    // conectar dominio propio
     ronda: 300,                      // ronda de revisión extra
   },
   despues: {                         // cambios después de entregar (no hay mantenimiento)
@@ -314,6 +315,7 @@ const PORTAFOLIOS = {
    (data-i18n="clave"). {nombre} y {apellido} se reemplazan solos. */
 const TEXTOS_EN = {
   skip: 'Skip to portfolio',
+  crSkip: 'Skip to plans',
   navHome: 'Home',
   navLabel: 'Main',
   navAbout: 'About me',
@@ -493,7 +495,6 @@ const TEXTOS_EN = {
   crqRondasMinus: 'Remove one round',
   crqRondasPlus: 'Add one round',
   crqCot: 'Quote tool on my page',
-  crqDom: 'Connect my own domain',
   crqName: 'Your name or @handle (optional)',
   crqNamePh: 'e.g. @yourname.ugc',
   crqAccept: 'I have read and accept the terms and conditions.',
@@ -540,6 +541,7 @@ const TEXTOS_EN = {
 const UI = {
   es: {
     docTitle: 'Creadora de contenido UGC en Querétaro',
+    crDocTitle: 'Portafolios para creadoras UGC',
     langBtn: 'Cambiar idioma a inglés',
     badge: { muestra: 'Video de muestra', concepto: 'Concepto', colaboracion: 'Colaboración con marca' },
     badgeMarca: 'Colaboración · {marca}',
@@ -620,8 +622,6 @@ const UI = {
     xSeccionNote: 'Métricas, servicios, preguntas frecuentes o lo que necesites',
     xSticker: 'Foto recortada tipo sticker',
     xStickerNote: 'Firma incluye 1',
-    xDominio: 'Conectar tu dominio propio',
-    xDominioNote: '.com o .mx; el dominio lo pagas tú cada año',
     xRonda: 'Ronda de revisión extra',
     xRondaNote: 'Máximo {max} rondas en total',
     xCambiarVideo: 'Cambiar un video por otro',
@@ -635,7 +635,6 @@ const UI = {
     crqCotPro: '(+{p})',
     crqCotFirma: '(incluido en Firma)',
     crqCotNo: '(disponible desde Pro)',
-    crqDomHint: '(+{p})',
     crqNoPlan: 'Elige tu plan para ver el total.',
     crqPlanLine: 'Plan {plan} · {videos}',
     crqDiscount: 'Descuento de lanzamiento (−{pct}%)',
@@ -650,7 +649,6 @@ const UI = {
     crqRondaLine: '{n} ronda extra',
     crqRondaLineP: '{n} rondas extra',
     crqCotLine: 'Cotizador',
-    crqDomLine: 'Dominio propio',
     crqWaHello: 'Hola, {nombre}. Vi tu página y quiero cotizar mi portafolio.',
     crqWaName: 'Soy: {name}',
     crqWaTotal: 'Total aproximado: {total} MXN + IVA',
@@ -662,6 +660,7 @@ const UI = {
   },
   en: {
     docTitle: 'UGC content creator in Querétaro, Mexico',
+    crDocTitle: 'Portfolios for UGC creators',
     langBtn: 'Switch language to Spanish',
     badge: { muestra: 'Sample video', concepto: 'Concept', colaboracion: 'Brand collaboration' },
     badgeMarca: 'Collab · {marca}',
@@ -742,8 +741,6 @@ const UI = {
     xSeccionNote: 'Metrics, services, FAQ or whatever you need',
     xSticker: 'Sticker-style cut-out photo',
     xStickerNote: 'Signature includes 1',
-    xDominio: 'Connect your own domain',
-    xDominioNote: '.com or .mx; you pay for the domain each year',
     xRonda: 'Extra revision round',
     xRondaNote: 'Up to {max} rounds in total',
     xCambiarVideo: 'Replace a video',
@@ -757,7 +754,6 @@ const UI = {
     crqCotPro: '(+{p})',
     crqCotFirma: '(included in Signature)',
     crqCotNo: '(available from Pro)',
-    crqDomHint: '(+{p})',
     crqNoPlan: 'Choose your plan to see the total.',
     crqPlanLine: '{plan} plan · {videos}',
     crqDiscount: 'Launch discount (−{pct}%)',
@@ -772,7 +768,6 @@ const UI = {
     crqRondaLine: '{n} extra round',
     crqRondaLineP: '{n} extra rounds',
     crqCotLine: 'Quote tool',
-    crqDomLine: 'Own domain',
     crqWaHello: 'Hi {nombre}! I saw your page and I’d like a quote for my portfolio.',
     crqWaName: 'I’m: {name}',
     crqWaTotal: 'Approximate total: {total} MXN + VAT',
@@ -794,6 +789,8 @@ const UI = {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const metaTheme = $('meta[name="theme-color"]');
   const BASE_THEME_COLOR = '#FFFCF7';
+  // Qué página es: el portafolio (index.html) o la de creadoras (creadoras.html)
+  const PAGE = document.getElementById('creadoras') ? 'creadoras' : 'marcas';
 
   const store = {
     get(k) { try { return window.localStorage.getItem(k); } catch (e) { return null; } },
@@ -857,7 +854,7 @@ const UI = {
         if (val != null) el.setAttribute(attr, val);
       });
     });
-    document.title = `${nombreCompleto()} · ${t('docTitle')}`;
+    document.title = PAGE === 'creadoras' ? `${t('crDocTitle')} · ${nombreCompleto()}` : `${nombreCompleto()} · ${t('docTitle')}`;
     const btn = $('#lang-toggle');
     if (btn) {
       btn.setAttribute('aria-label', t('langBtn'));
@@ -885,7 +882,8 @@ const UI = {
     bloque: '--block', bloqueTexto: '--block-ink', bloqueAcento: '--block-accent',
     celFondo: '--cel-bg', celTexto: '--cel-ink', celAcento: '--cel-accent',
   };
-  let fontTarget = { s: '', f: '' };
+  // La página para creadoras ya trae sus tipografías puestas en <html>; así no parpadean al cargar.
+  let fontTarget = { s: root.dataset.strong || '', f: root.dataset.fine || '' };
   let swapTimer = null;
 
   function setFonts(strong, fine) {
@@ -947,7 +945,7 @@ const UI = {
     li.innerHTML = `
       <div class="phone">
         <div class="phone__screen">
-          <video preload="none" playsinline webkit-playsinline poster="${esc(v.poster)}">
+          <video preload="none" playsinline webkit-playsinline data-poster="${esc(v.poster)}">
             <source src="${esc(v.archivo)}" type="video/mp4">
             ${v.subtitulos ? `<track kind="captions" src="${esc(v.subtitulos)}" srclang="es" label="Español" default>` : ''}
           </video>
@@ -1214,6 +1212,19 @@ const UI = {
       if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(active - 1); }
     });
 
+    // Las portadas de los videos se descargan hasta que el portafolio está por aparecer en pantalla.
+    const loadPosters = () => {
+      $$('video[data-poster]', track).forEach((v) => { v.poster = v.dataset.poster; v.removeAttribute('data-poster'); });
+    };
+    if ('IntersectionObserver' in window) {
+      const near = new IntersectionObserver((entries) => {
+        if (entries.some((en) => en.isIntersecting)) { loadPosters(); near.disconnect(); }
+      }, { rootMargin: '900px 0px' });
+      near.observe(track);
+    } else {
+      loadPosters();
+    }
+
     // Si deslizas y el video que suena ya casi no se ve, se pausa solo.
     if ('IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
@@ -1309,18 +1320,13 @@ const UI = {
   /* ---------- Portafolios para creadoras ---------- */
   const PF = typeof PORTAFOLIOS !== 'undefined' && PORTAFOLIOS && PORTAFOLIOS.activo ? PORTAFOLIOS : null;
   const crMain = $('#creadoras');
-  const brandMain = $('#marcas');
   const crq = $('#crq');
-  const wipe = $('.mode-wipe');
   const siteStatus = $('#site-status');
-  const CR_HASH = '#crea-el-tuyo';
   const CRQ_FIELDS = ['videos', 'idiomas', 'secciones', 'stickers', 'rondas'];
-  let modo = 'marcas';
+  const modo = PAGE;
   let crPlan = null;
   let crqCotUser = false;
-  let returnTo = null;
 
-  const isCrHash = (h) => h === CR_HASH || /^#cr-[\w-]+$/.test(h || '');
   const pick = (o) => (o == null ? '' : typeof o === 'string' ? o : (o[lang] != null ? o[lang] : (o.es != null ? o.es : '')));
   const say = (msg) => { if (siteStatus) siteStatus.textContent = msg; };
   const planById = (id) => (PF && PF.planes.find((p) => p.id === id)) || null;
@@ -1328,7 +1334,6 @@ const UI = {
   const videosLabel = (p) => fmt(p.hasta ? t('crVideosUpTo') : t('crVideos'), { n: p.videos });
   const countLabel = (n, one, many) => fmt(n === 1 ? t(one) : t(many), { n });
   const signed = (n) => (n < 0 ? `−${money(-n)}` : money(n));
-  const instant = { behavior: 'instant' };
 
   function launchState() {
     const l = (PF && PF.lanzamiento) || {};
@@ -1342,7 +1347,7 @@ const UI = {
     return { regular: p.precio, final: Math.round(p.precio * (1 - d)), d };
   }
 
-  // WhatsApp y correo generales: cambian según el modo
+  // WhatsApp y correo generales: el mensaje cambia según la página (marcas o creadoras)
   function updateModeLinks() {
     const cr = modo === 'creadoras';
     const msg = fmt(cr ? t('crWaGeneral') : t('waGeneral'), { nombre: CONFIG.nombre });
@@ -1437,7 +1442,6 @@ const UI = {
         row(t('xCot'), t('xCotNote'), plus(E.cotizador)),
         row(t('xSeccion'), t('xSeccionNote'), plus(E.seccion, t('xEach'))),
         row(t('xSticker'), t('xStickerNote'), plus(E.sticker, t('xEach'))),
-        row(t('xDominio'), t('xDominioNote'), plus(E.dominio)),
         row(t('xRonda'), fmt(t('xRondaNote'), { max: PF.maxRondas }), plus(E.ronda, t('xEach'))),
       ].join('');
     }
@@ -1490,7 +1494,6 @@ const UI = {
     });
     const E = PF.extras;
     const cot = !!(p && p.cotizador === 'extra' && crqCotUser);
-    const dom = $('#crq-dominio').checked;
     const items = [];
     let launch = false;
     if (p) {
@@ -1506,7 +1509,6 @@ const UI = {
     if (cot) items.push({ label: t('crqCotLine'), amount: E.cotizador });
     if (v.secciones) items.push({ label: countLabel(v.secciones, 'crqSeccionLine', 'crqSeccionLineP'), amount: v.secciones * E.seccion });
     if (v.stickers) items.push({ label: countLabel(v.stickers, 'crqStickerLine', 'crqStickerLineP'), amount: v.stickers * E.sticker });
-    if (dom) items.push({ label: t('crqDomLine'), amount: E.dominio });
     if (v.rondas) items.push({ label: countLabel(v.rondas, 'crqRondaLine', 'crqRondaLineP'), amount: v.rondas * E.ronda });
     const subtotal = items.reduce((s, it) => s + it.amount, 0);
     return { p, v, lim, items, subtotal, launch, name: ($('#crq-nombre').value || '').trim() };
@@ -1540,7 +1542,6 @@ const UI = {
     cotEl.disabled = cotMode !== 'extra';
     cotEl.checked = cotMode === 'incluido' || (cotMode === 'extra' && crqCotUser);
     hint('#crq-cot-hint', cotMode === 'incluido' ? t('crqCotFirma') : cotMode === 'extra' ? fmt(t('crqCotPro'), { p: money(E.cotizador) }) : t('crqCotNo'));
-    hint('#crq-dom-hint', fmt(t('crqDomHint'), { p: money(E.dominio) }));
 
     const list = $('#crq-breakdown');
     list.innerHTML = '';
@@ -1612,62 +1613,6 @@ const UI = {
     crqUpdate();
   }
 
-  // Cambia entre el portafolio (marcas) y el modo creadoras
-  function setModo(next, opts = {}) {
-    if (!PF || !crMain || !brandMain || next === modo) return;
-    const swap = () => {
-      modo = next;
-      const toCr = next === 'creadoras';
-      if (toCr) {
-        if (current) { const v = current.video; current = null; v.pause(); }
-        if (celSelected) { celSelected = null; updateCelTexts(); }
-      }
-      brandMain.hidden = toCr;
-      crMain.hidden = !toCr;
-      $$('[data-nav]').forEach((el) => { el.hidden = el.dataset.nav !== next; });
-      const back = $('#back-pill');
-      if (back) back.hidden = !toCr;
-      root.dataset.modo = next;
-      if (toCr) applyCrMood();
-      else { delete root.dataset.patron; resetTheme(); }
-      updateModeLinks();
-      const skip = $('.skip-link');
-      if (skip) skip.setAttribute('href', toCr ? '#cr-planes' : '#portafolio');
-      if (opts.history === 'push') history.pushState({ crModo: true }, '', CR_HASH);
-      else if (opts.history === 'replace') history.replaceState(null, '', toCr ? CR_HASH : location.pathname + location.search);
-
-      if (toCr) {
-        let target = null;
-        if (opts.keepHash && location.hash && location.hash !== CR_HASH) {
-          try { target = $(location.hash); } catch (e) { target = null; }
-        }
-        if (target) target.scrollIntoView(instant);
-        else {
-          window.scrollTo({ top: 0, ...instant });
-          const h = $('#cr-title');
-          if (h) h.focus({ preventScroll: true });
-        }
-        say(t('crModeOn'));
-      } else {
-        const to = returnTo ? $(returnTo) : null;
-        if (to) to.scrollIntoView({ block: 'center', ...instant });
-        else window.scrollTo({ top: 0, ...instant });
-        returnTo = null;
-        say(t('crModeOff'));
-      }
-    };
-    if (opts.instant || reduceMotion.matches || !wipe) { swap(); return; }
-    wipe.classList.remove('is-out');
-    void wipe.offsetWidth;
-    wipe.classList.add('is-in');
-    window.setTimeout(() => {
-      swap();
-      wipe.classList.remove('is-in');
-      wipe.classList.add('is-out');
-      window.setTimeout(() => wipe.classList.remove('is-out'), 520);
-    }, 440);
-  }
-
   function openTyc() {
     const d = $('#terminos');
     if (!d) return;
@@ -1685,22 +1630,15 @@ const UI = {
   }
 
   function initCreadoras() {
-    if (!PF || !crMain || !brandMain) {
+    if (!PF) {
+      // Con PORTAFOLIOS.activo en false se esconden los links a creadoras y esa página regresa al portafolio
       $$('.cr-cta, .footer__cr').forEach((el) => { el.hidden = true; });
+      if (crMain) location.replace('index.html');
       return;
     }
+    if (!crMain) return; // en el portafolio solo se usa el aviso de lugares del recuadro "Cotiza el tuyo"
+    applyCrMood();
     document.addEventListener('click', (e) => {
-      const m = e.target.closest('.js-modo');
-      if (m) {
-        e.preventDefault();
-        if (m.dataset.modo === 'creadoras') {
-          returnTo = m.closest('.cr-cta') ? '.cr-cta' : m.closest('.footer') ? '.footer' : null;
-          setModo('creadoras', { history: 'push' });
-        } else {
-          setModo('marcas', { history: 'replace' });
-        }
-        return;
-      }
       const tyc = e.target.closest('.js-tyc');
       if (tyc) { e.preventDefault(); openTyc(); }
     });
@@ -1747,13 +1685,6 @@ const UI = {
       if (close) close.addEventListener('click', closeTyc);
       dlg.addEventListener('click', (e) => { if (e.target === dlg) closeTyc(); });
     }
-
-    // Botón "atrás" del navegador y links directos (…/#crea-el-tuyo)
-    window.addEventListener('popstate', () => {
-      const want = isCrHash(location.hash) ? 'creadoras' : 'marcas';
-      if (want !== modo) setModo(want, { keepHash: true });
-    });
-    if (isCrHash(location.hash)) setModo('creadoras', { instant: true, keepHash: true });
   }
 
   /* ---------- Detalles: barra superior y apariciones suaves ---------- */
